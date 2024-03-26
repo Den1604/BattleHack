@@ -1,0 +1,7 @@
+@ $Script_SetupMusic
+{
+    Call SetMusicTrack ( 00000000 .Song:StarHaven 00000000 00000008 )
+    Call PlaySound ( 80000064 )
+	Return
+	End
+}

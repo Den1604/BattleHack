@@ -48,12 +48,46 @@
 
 #new:Script $Script_EnterMap
 {
+	Call  GetEntryID    ( *Var[0] )
+	Switch  *Var[0]
+		CaseOR  ==  ~Entry:Entry0
+		CaseOR  ==  ~Entry:Entry1
+			Set   *Var[0] $Script_CreateExitTriggers
+			Exec  EnterWalk
+		EndCaseGroup
+		Default
+			Exec  $Script_CreateExitTriggers
+	EndSwitch
+	Return
+	End
+}
+
+#new:Script $Script_Exit_Entry0
+{
+	SetGroup 0000001B
+	Call     UseExitHeading ( 60` ~Entry:Entry0 )
+	Exec     ExitWalk
+	Call  GotoMap   ( "hos_04" ~Entry:hos_04:EntryNewLZ )
+	Wait  100`
+	Return
+	End
+}
+
+#new:Script $Script_Exit_Entry1
+{
+	SetGroup 0000001B
+	Call     UseExitHeading ( 60` ~Entry:Entry1 )
+	Exec     ExitWalk
+	Call  GotoMap   ( "btl_00" ~Entry:btl_00:Entry1 )
+	Wait  100`
 	Return
 	End
 }
 
 #new:Script $Script_CreateExitTriggers
 {
+	Bind  $Script_Exit_Entry0 .Trigger:FloorAbove ~Collider:LZ_West_Collider 00000001 00000000
+	Bind  $Script_Exit_Entry1 .Trigger:FloorAbove ~Collider:LZ_Stair_Collider 00000001 00000000
 	Return
 	End
 }

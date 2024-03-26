@@ -1,0 +1,87 @@
+@ $Header
+{
+	[MainScript]  $Script_Main
+	[EntryList]   $EntryList
+	[EntryCount]  00000006
+	[Background]  80200000
+	[MapTattle]   00190020
+}
+
+@ $EntryList
+{
+	~Vec4f:Entry0 % -565.0    0.0    0.0   90.0
+	~Vec4f:Entry1 %  100.0  100.0    0.0  270.0
+	~Vec4f:Entry2 %    0.0    0.0    0.0    0.0
+	~Vec4f:Entry3 % -1570.0    0.0    0.0   90.0
+	~Vec4f:Entry4 % -1570.0    0.0    0.0   90.0
+	~Vec4f:EntryNewLZ
+}
+
+
+@ $Script_80240F58
+{
+    Call SetMusicTrack ( 00000000 .Song:StarHaven 00000000 00000008 )
+    Call PlaySound ( 80000064 )
+    Return
+    End
+}
+
+@ $Script_EnterWalk_80241150
+{
+    Set   *Var0  $Script_80241108
+    ExecWait  EnterWalk
+    Wait  20`
+    Return
+    End
+}
+
+@ $Script_80241108
+{
+    Bind  $Script_DeniedLeaveWest .Trigger:FloorAbove ~Collider:deilinw 00000001 00000000 %Collider leaving
+    Bind  $Script_DeniedLeaveCitadel .Trigger:FloorAbove ~Collider:o163 00000001 00000000 %Collider into Citadel
+    Bind  $Script_ExitWalk_NewLZ .Trigger:FloorAbove ~Collider:NewLZCollider 00000001 00000000 %Collider to the backside
+    Return
+    End
+}
+
+#new:Script $Script_DeniedLeaveWest
+{
+    Call RandInt ( 14` *Var0 )
+    Add 1` *Var0
+    Wait *Var0
+    Call DisablePlayerInput ( .True )
+    Wait 5`
+    Call SetPlayerAnimation ( 00090000 )
+    Wait 30`
+    Call PlayerMoveTo ( ~Vec2D:Entry0 15` )
+    Call WaitForPlayerMoveToComplete ()
+    Call SetPlayerAnimation ( 00010002 )
+    Call DisablePlayerInput ( .False )
+    Return
+    End
+}
+
+#new:Script $Script_DeniedLeaveCitadel
+{
+    Call DisablePlayerInput ( .True )
+    Wait 5`
+    Call SetPlayerAnimation ( 00090000 )
+    Wait 30`
+    Call PlayerMoveTo ( ~Vec2D:Entry1 15` )
+    Call WaitForPlayerMoveToComplete ()
+    Call SetPlayerAnimation ( 00010002 )
+    Call DisablePlayerInput ( .False )
+    Return
+    End
+}
+
+#new:Script $Script_ExitWalk_NewLZ
+{
+    SetGroup  0000001B
+    Call  UseExitHeading    ( 0000003C ~Entry:EntryNewLZ )
+    Exec  ExitWalk
+    Call  GotoMap   ( "btl_00" 00000000 )
+    Wait  100`
+    Return
+    End
+}
