@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="btl_00" author="unnamed" background="hos_bg" textures="hos_tex">
 	<Editor>
-		<Camera pos="-125.883217,165.931107,430.256775" pitch="12.080006" yaw="312.569855"/>
+		<Camera pos="171.995468,191.996521,-4.582711" pitch="9.200001" yaw="273.022736"/>
 		<Camera pos="-291.057068,65536.000000,49.373558"/>
 		<Camera pos="65536.000000,120.859985,45.586071"/>
 		<Camera pos="-455.822754,288.489777,65536.000000"/>
@@ -7249,7 +7249,7 @@
 			<HitObject type="ROOT"/>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="HullCollider" id="A" hidden="true"/>
+			<MapObject name="HullCollider" id="A"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -7277,7 +7277,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="MeshCollider" id="9" hidden="true"/>
+			<MapObject name="MeshCollider" id="9"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -7313,7 +7313,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="MeshCollider" id="8" hidden="true"/>
+			<MapObject name="MeshCollider" id="8"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -7349,7 +7349,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="MeshCollider" id="7" hidden="true"/>
+			<MapObject name="MeshCollider" id="7"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -7401,7 +7401,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="MeshCollider" id="6" hidden="true"/>
+			<MapObject name="MeshCollider" id="6"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -7445,7 +7445,7 @@
 			<HitObject type="GROUP"/>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="LZ_Stair_Collider" id="3" hidden="true"/>
+			<MapObject name="LZ_Stair_Collider" id="3"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -7533,7 +7533,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="LZ_West_Collider" id="2" hidden="true"/>
+			<MapObject name="LZ_West_Collider" id="2"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -7557,7 +7557,7 @@
 			<HitObject type="GROUP"/>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="MeshCollider" id="0" hidden="true"/>
+			<MapObject name="MeshCollider" id="0"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -7599,7 +7599,7 @@
 			<HitObject type="ROOT"/>
 		</Zone>
 		<Zone ver="0">
-			<MapObject name="Split Zone" id="2" hidden="true"/>
+			<MapObject name="Split Zone" id="2"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -7618,7 +7618,7 @@
 			<Camera type="TYPE_6" flag="false" boomLength="450.000000" boomPitch="16.000000" viewPitch="-6.000000" posA="-251,10,256" posB="-54,10,58" posC="10,0,10"/>
 		</Zone>
 		<Zone ver="0">
-			<MapObject name="Split Zone" id="1" hidden="true"/>
+			<MapObject name="Split Zone" id="1"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -7643,7 +7643,7 @@
 			<Camera type="TYPE_6" flag="false" boomLength="450.000000" boomPitch="16.000000" viewPitch="-6.000000" posA="-316,10,210" posB="42,10,210" posC="10,0,10"/>
 		</Zone>
 		<Zone ver="0">
-			<MapObject name="MeshZone" id="0" hidden="true"/>
+			<MapObject name="MeshZone" id="0"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -7701,7 +7701,7 @@
 			<Entrance type="Walk" hasCallback="false" entry="Entry0"/>
 			<Entrance type="Walk" hasCallback="false" entry="Entry1"/>
 			<Exit type="Walk" hasCallback="false" entry="Entry0" destMap="hos_04" destEntry="EntryNewLZ" trigger="LZ_West_Collider"/>
-			<Exit type="Walk" hasCallback="false" entry="Entry1" destMap="btl_00" destEntry="Entry1" trigger="LZ_Stair_Collider"/>
+			<Exit type="Walk" hasCallback="false" entry="Entry1" destMap="btl_01" destEntry="Entry0" trigger="LZ_Stair_Collider"/>
 		</Generators>
 		<Camera vfov="25" near="16" far="4096" bgcolor="0,0,0" leadsPlayer="false"/>
 		<Fog world="0,10,10,10,255,950,1000" entity="0,10,10,10,255,950,1000"/>

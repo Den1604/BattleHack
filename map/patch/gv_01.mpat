@@ -1,0 +1,120 @@
+@ $EntryList
+{
+	~Vec4f:Entry0 %    0.0    0.0    0.0   90.0
+	0.0    0.0    0.0   90.0
+}
+
+@ $Header
+{
+	[MainScript]  $Script_80241690[B8]
+	[EntryList]   $EntryList
+	[EntryCount]  00000002
+	[Background]  00000000
+	[MapTattle]   00000000
+}
+
+@ $Script_80241690
+{
+    0:  UseIntBuffer  $IntTable_802415DC
+    C:  Loop  0000001A
+   18:  	Get1Int  *Var1
+   24:  	Call  TranslateGroup    ( *Var0 00000000 *Var1 00000000 )
+   40:  	Wait  1`
+   4C:  EndLoop
+   54:  Return
+   5C:  UseIntBuffer  $IntTable_80241644
+   68:  Loop  00000013
+   74:  	Get1Int  *Var1
+   80:  	Call  TranslateGroup    ( *Var0 00000000 *Var1 00000000 )
+   9C:  	Wait  1`
+   A8:  EndLoop
+   B0:  Return
+   B8:  Call  DisablePlayerInput        ( .True )
+   C8:  Call  ModifyGlobalOverrideFlags ( 00000000 00020000 )
+   DC:  Call  SetCamPerspective ( .Cam:Default 00000003  25`  16`  4096` )
+   FC:  Call  SetCamBGColor     ( .Cam:Default  0`  0`  0` )
+  118:  Call  SetCamEnabled     ( .Cam:Default .True )
+  12C:  Call  SetCamLeadPlayer  ( .Cam:Default .False )
+  140:  Thread
+  148:  	Call  GetCurrentPartnerID   ( *Var0 )
+  158:  	If  *Var0  !=  .Partner:None % 0
+  168:  		Call  DisablePartnerAI  ( 00000000 )
+  178:  		Call  SetNpcFlagBits    ( .Npc:Partner 00000200 .False )
+  190:  		Call  SetNpcPos ( .Npc:Partner  0`  -1000`  0` )
+  1AC:  	EndIf
+  1B4:  	Call  SetPlayerFlagBits ( 00200000 .True )
+  1C8:  	Call  InterpPlayerYaw   (  90`  0` )
+  1DC:  	Wait  2`
+  1E8:  	Call  RandInt   ( 00000004 *Var0 )
+  1FC:  	Switch  *Var0
+  208:  		Case  ==  00000000
+  214:  			Call  SetPlayerAnimation    ( 0001000D )
+  224:  		Case  ==  00000001
+  230:  			Call  SetPlayerAnimation    ( .PlayerAnim:Crouch )
+  240:  		Case  ==  00000002
+  24C:  			Call  SetPlayerAnimation    ( .PlayerAnim:ShockStill )
+  25C:  		Case  ==  00000003
+  268:  			Call  SetPlayerAnimation    ( .PlayerAnim:Pray )
+  278:  		Case  ==  00000004
+  284:  			Call  SetPlayerAnimation    ( .PlayerAnim:DeadStill )
+  294:  	EndSwitch
+          Call GetEntryID ( *VarF )
+          If *VarF == 00000001
+            Call DisablePlayerPhysics ( .True )
+            Call SetPlayerPos ( 0` -1000` 0` )
+          EndIf
+  29C:  EndThread
+  2A4:  Call  SetMusicTrack ( 00000000 .Song:GameOver 00000000 00000008 )
+  2C0:  Call  ClearAmbientSounds    ( 00000000 )
+  2D0:  Thread
+  2D8:  	Wait  200`
+  2E4:  	Call  $Function_802405EC ( )
+  2F0:  	Call  $Function_80240688 ( )
+  2FC:  	Wait  100`
+  308:  EndThread
+  310:  Call  802D7CF8  ( 00000000 00000000 00000000 00000140 000000F0 00000080 0000000A )
+  338:  Call  TranslateGroup    ( ~Model:g 00000000 000000C8 00000000 )
+  354:  Call  TranslateGroup    ( ~Model:a 00000000 000000C8 00000000 )
+  370:  Call  TranslateGroup    ( ~Model:m 00000000 000000C8 00000000 )
+  38C:  Call  TranslateGroup    ( ~Model:e 00000000 000000C8 00000000 )
+  3A8:  Call  TranslateGroup    ( ~Model:o 00000000 000000C8 00000000 )
+  3C4:  Call  TranslateGroup    ( ~Model:v 00000000 000000C8 00000000 )
+  3E0:  Call  TranslateGroup    ( ~Model:e2 00000000 000000C8 00000000 )
+  3FC:  Call  TranslateGroup    ( ~Model:r 00000000 000000C8 00000000 )
+  418:  Thread
+  420:  	Wait  6`
+  42C:  	Set   *Var0  00000004
+  43C:  	Exec  $Script_80241690
+  448:  	Wait  6`
+  454:  	Set   *Var0  00000006
+  464:  	Exec  $Script_80241690
+  470:  	Wait  12`
+  47C:  	Set   *Var0  00000008
+  48C:  	Exec  $Script_80241690
+  498:  	Wait  6`
+  4A4:  	Set   *Var0  0000000A
+  4B4:  	Exec  $Script_80241690
+  4C0:  	Wait  6`
+  4CC:  	Set   *Var0  0000000C
+  4DC:  	Exec  $Script_80241690
+  4E8:  	Wait  6`
+  4F4:  	Set   *Var0  0000000E
+  504:  	Exec  $Script_80241690
+  510:  	Wait  6`
+  51C:  	Set   *Var0  00000010
+  52C:  	Exec  $Script_80241690
+  538:  	Wait  18`
+  544:  	Set   *Var0  00000012
+  554:  	Exec  $Script_80241690[5C]
+  560:  EndThread
+  568:  Thread
+  570:  	Call  UseSettingsFrom   ( .Cam:Default  0`  10`  0` )
+  58C:  	Call  SetPanTarget  ( .Cam:Default  0`  0`  0` )
+  5A8:  	Call  SetCamSpeed   ( .Cam:Default *Fixed[0.3] )
+  5BC:  	Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  5D4:  	Wait  94`
+  5E0:  	Call  SetPanTarget  ( .Cam:Default  0`  0`  1000` )
+  5FC:  EndThread
+  604:  Return
+  60C:  End
+}

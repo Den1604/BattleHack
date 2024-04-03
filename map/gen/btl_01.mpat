@@ -1,17 +1,16 @@
-% Auto-generated script for btl_00
+% Auto-generated script for btl_01
 
 #new:Header $Header
 {
 	[MainScript] $Script_Main
-	[Background] 80200000
+	[Background] 00000000
 	[EntryList] $EntryList
-	[EntryCount] 2
+	[EntryCount] 1
 }
 
 #new:EntryList $EntryList
 {
 	~Vec4f:Entry0
-	~Vec4f:Entry1
 }
 
 #new:Script_Main $Script_Main
@@ -50,11 +49,9 @@
 {
 	Call  GetEntryID    ( *Var[0] )
 	Switch  *Var[0]
-		CaseOR  ==  ~Entry:Entry0
-		CaseOR  ==  ~Entry:Entry1
+		Case  ==  ~Entry:Entry0
 			Set   *Var[0] $Script_CreateExitTriggers
 			Exec  EnterWalk
-		EndCaseGroup
 		Default
 			Exec  $Script_CreateExitTriggers
 	EndSwitch
@@ -67,18 +64,7 @@
 	SetGroup 0000001B
 	Call     UseExitHeading ( 60` ~Entry:Entry0 )
 	Exec     ExitWalk
-	Call  GotoMap   ( "hos_04" ~Entry:hos_04:EntryNewLZ )
-	Wait  100`
-	Return
-	End
-}
-
-#new:Script $Script_Exit_Entry1
-{
-	SetGroup 0000001B
-	Call     UseExitHeading ( 60` ~Entry:Entry1 )
-	Exec     ExitWalk
-	Call  GotoMap   ( "btl_01" ~Entry:btl_01:Entry0 )
+	Call  GotoMap   ( "btl_00" ~Entry:btl_00:Entry1 )
 	Wait  100`
 	Return
 	End
@@ -86,8 +72,7 @@
 
 #new:Script $Script_CreateExitTriggers
 {
-	Bind  $Script_Exit_Entry0 .Trigger:FloorAbove ~Collider:LZ_West_Collider 00000001 00000000
-	Bind  $Script_Exit_Entry1 .Trigger:FloorAbove ~Collider:LZ_Stair_Collider 00000001 00000000
+	Bind  $Script_Exit_Entry0 .Trigger:FloorAbove ~Collider:LZStairCollider 00000001 00000000
 	Return
 	End
 }

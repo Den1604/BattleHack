@@ -31,6 +31,7 @@
     Set   *Var0  $Script_80241108
     ExecWait  EnterWalk
     Wait  20`
+    Set *MapVar[0] 0`
     Return
     End
 }
@@ -50,6 +51,10 @@
     Add 1` *Var0
     Wait *Var0
     Call DisablePlayerInput ( .True )
+    Add *MapVar[0] 1`
+    If *MapVar[0] == 5`
+        ExecWait $Script_MarioOuttasHere
+    EndIf
     Wait 5`
     Call SetPlayerAnimation ( 00090000 )
     Wait 30`
@@ -64,6 +69,10 @@
 #new:Script $Script_DeniedLeaveCitadel
 {
     Call DisablePlayerInput ( .True )
+    Add *MapVar[0] 1`
+    If *MapVar[0] == 5`
+        ExecWait $Script_MarioOuttasHere
+    EndIf
     Wait 5`
     Call SetPlayerAnimation ( 00090000 )
     Wait 30`
@@ -84,4 +93,41 @@
     Wait  100`
     Return
     End
+}
+
+#new:Script $Script_MarioOuttasHere
+{
+    Call GetPlayerPos ( *MapVar[1] *MapVar[2] *MapVar[3] )
+    If *MapVar[1] < -100` %EastLZ
+        Sub *MapVar[2] 100`
+        Add *MapVar[3] 200`
+    Else %CitadelLZ
+        Call PlayerMoveTo ( ~Vec2D:Entry1 15` )
+        Call PlayerMoveTo ( 87` 125` 30` )
+        Call InterpPlayerYaw ( -107` 5` )
+        Call GetPlayerPos ( *MapVar[1] *MapVar[2] *MapVar[3] )
+        Sub *MapVar[1] 50`
+        Sub *MapVar[2] 100`
+        Add *MapVar[3] 50`
+    EndIf
+    Call SpeakToPlayer ( .Npc:Player 0001001C 00010002 00000005 $String_OuttaHere )
+    Call SetPlayerAnimation ( 00010033 )
+    Wait 20`
+    Call DisablePlayerPhysics ( .True )
+    Wait 9`
+    Call SetPlayerAnimation ( 00010006 )
+    Wait 12`
+    Call SetPlayerJumpscale ( *Fixed[0.5] )
+    Call PlayerJump ( *MapVar[1] *MapVar[2] *MapVar[3] 40` )
+    Wait 40`
+    Call GotoMap ( "gv_01" 00000001 )
+    Return
+    End
+}
+
+#new:String $String_OuttaHere
+{
+[Style Tattle]
+[PrintRising]I'm outta here![/fx][br]
+[Pause:15][End]
 }
