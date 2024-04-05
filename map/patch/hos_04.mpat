@@ -89,7 +89,7 @@
     SetGroup  0000001B
     Call  UseExitHeading    ( 0000003C ~Entry:EntryNewLZ )
     Exec  ExitWalk
-    Call  GotoMap   ( "btl_00" 00000000 )
+    Call  GotoMap   ( "btl_01" 00000000 )
     Wait  100`
     Return
     End
