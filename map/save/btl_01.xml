@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="btl_01" author="unnamed" textures="hos_tex">
 	<Editor>
-		<Camera pos="244.969376,617.986511,-118.155807" pitch="20.839994" yaw="29.650681"/>
-		<Camera pos="731.646057,65536.000000,-269.251801"/>
+		<Camera pos="146.992096,414.644440,-352.043671" pitch="21.480034" yaw="240.346298"/>
+		<Camera pos="10.193087,65536.000000,-283.745422"/>
 		<Camera pos="65536.000000,276.301025,-247.584381"/>
 		<Camera pos="717.471436,364.600586,65536.000000"/>
 	</Editor>
@@ -137,9 +137,12 @@
 		</Node>
 	</ZoneTree>
 	<MarkerTree>
-		<Node name="Root" id="1">
-			<Node name="Entrances" id="FFFFFFFF"/>
-			<Node name="Entry0" id="0"/>
+		<Node name="Root" id="3">
+			<Node name="Entrances" id="1">
+				<Node name="Entry0" id="FFFFFFFF"/>
+				<Node name="Entry1" id="0"/>
+			</Node>
+			<Node name="GourmetGuy" id="2"/>
 		</Node>
 	</MarkerTree>
 	<LightSets>
@@ -11076,13 +11079,21 @@
 	</Zones>
 	<Markers>
 		<Marker ver="4" type="Root">
-			<MapObject name="Root" id="1"/>
+			<MapObject name="Root" id="3"/>
 		</Marker>
-		<Marker ver="4" type="Entry" pos="114,332,-779" yaw="54.537872">
-			<MapObject name="Entry0" id="0"/>
+		<Marker ver="4" type="NPC" pos="-5,332,-322" yaw="165.000000">
+			<MapObject name="GourmetGuy" id="2"/>
+			<Movement type="Stationary" data="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"/>
+			<Sprite sprite="3B" palette="0" animations="1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"/>
 		</Marker>
 		<Marker ver="4" type="Group">
-			<MapObject name="Entrances" id="FFFFFFFF"/>
+			<MapObject name="Entrances" id="1"/>
+		</Marker>
+		<Marker ver="4" type="Entry" pos="10,332,-266" yaw="-15.000000">
+			<MapObject name="Entry1" id="0"/>
+		</Marker>
+		<Marker ver="4" type="Entry" pos="114,332,-779" yaw="54.537872">
+			<MapObject name="Entry0" id="FFFFFFFF"/>
 		</Marker>
 	</Markers>
 	<ScriptData>
@@ -11106,6 +11117,7 @@
 		</TexPanners>
 		<Generators>
 			<Entrance type="Walk" hasCallback="false" entry="Entry0"/>
+			<Entrance type="Teleport" hasCallback="false" entry="Entry1"/>
 			<Exit type="Walk" hasCallback="false" entry="Entry0" destMap="hos_04" destEntry="EntryNewLZ" trigger="LZStairCollider"/>
 		</Generators>
 		<Camera vfov="25" near="16" far="4096" bgcolor="0,0,0" leadsPlayer="false"/>

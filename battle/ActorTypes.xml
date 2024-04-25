@@ -213,4 +213,5 @@
 	<ActorType desc="SlotMachineStart" id="D1" name="00290076" tattle="001C0093" sfxIncrement="30,30"/>
 	<ActorType desc="SlotMachineStart" id="D2" name="00290076" tattle="001C0093" sfxIncrement="30,30"/>
 	<ActorType desc="SlotMachineStart" id="D3" name="00290076" tattle="001C0093" sfxIncrement="30,30"/>
+	<ActorType desc="GourmetGuy" id="D4" name="0029007D" tattle="001C0096" tattleCamOffset="0,5,0" sfxWalk="20BA,3B4" sfxJump="3E2" sfxHurt="10F" sfxIncrement="30,30"/>
 </ActorTypes>

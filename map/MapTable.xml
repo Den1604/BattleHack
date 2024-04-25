@@ -571,6 +571,7 @@
 	<Area name="btl">
 		<Map name="btl_00" nickname="Star Temple Backside"/>
 		<Map name="btl_01" nickname="Star Temple Top"/>
+		<Stage name="btl_bt01"/>
 	</Area>
 	<Resource name="mac_tex" compressed="false"/>
 	<Resource name="tik_tex" compressed="false"/>

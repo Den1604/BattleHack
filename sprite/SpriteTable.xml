@@ -59,7 +59,7 @@
 		<Sprite id="38" src="38" name="Sentinel"/>
 		<Sprite id="39" src="39" name="World Clubba"/>
 		<Sprite id="3A" src="3A" name="Battle Clubba"/>
-		<Sprite id="3B" src="3B" name="Shy Guy"/>
+		<Sprite id="3B" src="3B - Gourmet Shy Guy" name="Shy Guy"/>
 		<Sprite id="3C" src="3C" name="Groove Guy"/>
 		<Sprite id="3D" src="3D" name="Sky Guy"/>
 		<Sprite id="3E" src="3E" name="Pyro Guy"/>

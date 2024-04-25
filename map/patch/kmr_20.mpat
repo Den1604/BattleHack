@@ -1,0 +1,7 @@
+@ $Script_8024FD70
+{
+  Call GotoMap ( "btl_01" 00000001 )
+  Wait 300`
+  Return
+  End
+}

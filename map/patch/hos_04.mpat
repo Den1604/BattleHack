@@ -110,7 +110,7 @@
         Sub *MapVar[2] 100`
         Add *MapVar[3] 50`
     EndIf
-    Call SpeakToPlayer ( .Npc:Player 0001001C 00010002 00000005 $String_OuttaHere )
+    Call SpeakToPlayer ( .Npc:Player 0001001C 00010002 00000005 002F0000 )
     Call SetPlayerAnimation ( 00010033 )
     Wait 20`
     Call DisablePlayerPhysics ( .True )
@@ -123,11 +123,4 @@
     Call GotoMap ( "gv_01" 00000001 )
     Return
     End
-}
-
-#new:String $String_OuttaHere
-{
-[Style Tattle]
-[PrintRising]I'm outta here![/fx][br]
-[Pause:15][End]
 }

@@ -1,0 +1,12 @@
+#string:2F:000
+{
+[Style Tattle]
+[PrintRising]I'm outta here![/fx][br]
+[Pause:15][End]
+}
+
+#string:2F:001
+{
+[Style Right]
+Die.[Wait][End]
+}

@@ -1,0 +1,61 @@
+#define .NpcID:GourmetGuy 00
+
+@ $Script_Main
+{
+	Set   *GB_WorldLocation  .Location:StarHaven
+	Call  SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call  SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
+	Call  SetCamEnabled      ( .Cam:Default .True )
+	Call  SetCamLeadPlayer   ( .Cam:Default .False )
+	Exec  $Script_SetupMusic
+	Exec  $Script_EnterMap
+    Call MakeNpcs ( .True $NpcGroupList_ShyGuy )
+	Return
+	End
+}
+
+#new:NpcGroupList $NpcGroupList_ShyGuy
+{
+    00000001 $NpcGroup_ShyGuy 00000000
+    00000000 00000000 00000000
+}
+
+#new:NpcGroup $NpcGroup_ShyGuy
+{
+	.NpcID:GourmetGuy $NpcSettings_ShyGuy ~Vec3f:GourmetGuy
+	00002809 $Script_Init_ShyGuy 00000000 00000000 0000005A
+	~NoDrops
+	~Movement:GourmetGuy
+	~AnimationTable:GourmetGuy 
+	00000000 00000000 00000000 00000000 %Tattle String
+}
+
+#new:NpcSettings $NpcSettings_ShyGuy
+{
+	00000000 00170037 00000000 00000000 00000000 00000000 00000000 00000000
+	00000000 00000000 00630010
+}
+
+#new:Script $Script_Init_ShyGuy
+{
+    Call  BindNpcIdle       ( .Npc:Self $Script_Idle_ShyGuy )
+    Call  BindNpcInteract   ( .Npc:Self $Script_Interact_ShyGuy )
+    Return
+    End
+}
+
+#new:Script $Script_Idle_ShyGuy
+{
+    Call SetNpcAnimation ( .NpcID:GourmetGuy 003B0001 )
+    Return
+    End
+}
+
+#new:Script $Script_Interact_ShyGuy
+{
+    Call DisablePlayerInput ( .True )
+    Call SpeakToPlayer ( .NpcID:GourmetGuy 003B0011 003B0001 00000000 002F0001 )
+    Call StartBossBattle ( .Song:WhaleTheme )
+    Return
+    End
+}
