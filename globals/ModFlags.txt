@@ -1,0 +1,2 @@
+000 = MF_HasJumped
+001 = MF_CancelledJump

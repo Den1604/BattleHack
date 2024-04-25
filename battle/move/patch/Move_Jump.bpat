@@ -1,0 +1,56 @@
+@ $Script_UseMove0
+{
+    0:  Call  802694A4  ( 00000001 )
+   10:  Call  GetBattleFlags2   ( *Var0 )
+   20:  If  *Var0  &  00000200
+   30:  	ExecWait  $Script_802A4018
+   Set *MF_HasJumped .True
+   3C:  	Return
+   44:  EndIf
+   4C:  Call  GetMenuSelection  ( *Var0 *Var1 *Var2 )
+   64:  Switch  *Var1
+   70:  	Case  ==  .Item:Nothing % 0
+   7C:  		ExecWait  $Script_802A2720
+   88:  	Case  ==  .Item:Jump % 1
+   94:  		ExecWait  $Script_802A2ABC
+   A0:  	Case  ==  .Item:SpinJump % 2
+   AC:  		ExecWait  $Script_802A2DE8
+   B8:  EndSwitch
+   Set *MF_HasJumped .True
+   C0:  Return
+   C8:  End
+}
+
+@ $Script_UseMove1
+{
+    0:  Call  802694A4  ( 00000001 )
+   10:  Call  GetMenuSelection  ( *Var0 *Var1 *Var2 )
+   28:  Switch  *Var1
+   34:  	Case  ==  .Item:Nothing % 0
+   40:  		ExecWait  $Script_802A3188
+   4C:  	Case  ==  .Item:Jump % 1
+   58:  		ExecWait  $Script_802A3378
+   64:  	Case  ==  .Item:SpinJump % 2
+   70:  		ExecWait  $Script_802A34EC
+   7C:  EndSwitch
+   Set *MF_HasJumped .True
+   84:  Return
+   8C:  End
+}
+
+@ $Script_UseMove2
+{
+    0:  Call  802694A4  ( 00000001 )
+   10:  Call  GetMenuSelection  ( *Var0 *Var1 *Var2 )
+   28:  Switch  *Var1
+   34:  	Case  ==  .Item:Nothing % 0
+   40:  		ExecWait  $Script_802A36D8
+   4C:  	Case  ==  .Item:Jump % 1
+   58:  		ExecWait  $Script_802A39C4
+   64:  	Case  ==  .Item:SpinJump % 2
+   70:  		ExecWait  $Script_802A3CF0
+   7C:  EndSwitch
+   Set *MF_HasJumped .True
+   84:  Return
+   8C:  End
+}

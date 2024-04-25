@@ -10,3 +10,39 @@
 [Style Right]
 Die.[Wait][End]
 }
+
+#string:2F:002
+{
+[Style Right]
+Phase 1 End String.[Wait][End]
+}
+
+#string:2F:003
+{
+[Style Right]
+Phase 2 Start String.[Wait][End]
+}
+
+#string:2F:004
+{
+[Style Right]
+Phase 2 End String.[Wait][End]
+}
+
+#string:2F:005
+{
+[Style Right]
+Phase 3 Start String.[Wait][End]
+}
+
+#string:2F:006
+{
+[Style Right]
+Phase 3 End String.[Wait][End]
+}
+
+#string:2F:007
+{
+[Style Right]
+2 Jumps in one Jump.[Wait][End]
+}

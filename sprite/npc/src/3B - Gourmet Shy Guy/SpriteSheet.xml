@@ -294,6 +294,43 @@
 				<Command val="4"/>
 				<Command val="2000"/>
 			</Component>
+			<Component name="Comp_01" xyz="16,3,2">
+				<Command val="1029"/>
+				<Command val="3000"/>
+				<Command val="FFFE"/>
+				<Command val="9"/>
+				<Command val="0"/>
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="1E"/>
+				<Command val="4"/>
+				<Command val="3000"/>
+				<Command val="FFFD"/>
+				<Command val="1"/>
+				<Command val="0"/>
+				<Command val="4"/>
+				<Command val="2000"/>
+			</Component>
+			<Component name="Comp_02" xyz="-1,10,-2">
+				<Command val="102A"/>
+				<Command val="3000"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="5A"/>
+				<Command val="4"/>
+				<Command val="3000"/>
+				<Command val="FFFA"/>
+				<Command val="9"/>
+				<Command val="0"/>
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="2D"/>
+				<Command val="4"/>
+				<Command val="2000"/>
+			</Component>
 		</Animation>
 		<Animation name="Anim_0D">
 			<Component name="Comp_00" xyz="0,0,0">
@@ -307,7 +344,32 @@
 		<Animation name="Anim_0E">
 			<Component name="Comp_00" xyz="0,0,0">
 				<Command val="100A"/>
+				<Command val="6000"/>
 				<Command val="2"/>
+				<Command val="2000"/>
+			</Component>
+			<Component name="Comp_01" xyz="16,3,2">
+				<Command val="1029"/>
+				<Command val="6019"/>
+				<Command val="3000"/>
+				<Command val="FFF3"/>
+				<Command val="FFFE"/>
+				<Command val="0"/>
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="FFAE"/>
+				<Command val="2000"/>
+			</Component>
+			<Component name="Comp_02" xyz="-1,10,-2">
+				<Command val="102A"/>
+				<Command val="6019"/>
+				<Command val="3000"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="6E"/>
 				<Command val="2000"/>
 			</Component>
 		</Animation>
@@ -455,7 +517,9 @@
 				<Command val="E"/>
 				<Command val="100B"/>
 				<Command val="C"/>
-				<Command val="2000"/>
+				<Command val="1000"/>
+				<Command val="E"/>
+				<Command val="2004"/>
 			</Component>
 			<Component name="Comp_01" xyz="16,3,2">
 				<Command val="1029"/>
@@ -472,7 +536,12 @@
 				<Command val="0"/>
 				<Command val="FFF1"/>
 				<Command val="C"/>
-				<Command val="2000"/>
+				<Command val="3000"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="C"/>
+				<Command val="200E"/>
 			</Component>
 			<Component name="Comp_02" xyz="-1,1,-2">
 				<Command val="102A"/>
@@ -492,7 +561,15 @@
 				<Command val="C"/>
 				<Command val="0"/>
 				<Command val="C"/>
-				<Command val="2000"/>
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="5A"/>
+				<Command val="3000"/>
+				<Command val="0"/>
+				<Command val="9"/>
+				<Command val="0"/>
+				<Command val="E"/>
+				<Command val="2011"/>
 			</Component>
 		</Animation>
 		<Animation name="Anim_17">
