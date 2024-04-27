@@ -1,0 +1,88 @@
+% Code grabbed from `kmr_30`, found by Xdelta
+%
+% Dispatcher and documentation by elDexter
+
+/%#new:Script $Script_FadeModel
+{
+    Set     *Var0 ~Model:myModel
+    Set     *Var1 0 % fade
+    Set     *Var2 15` % speed
+    Exec    $Script_UpdateModelAlpha
+    Return
+    End
+}%/
+
+% Var0 = modelID
+%
+% Var1 = fade/unfade (bool) true/false
+%
+% Var2 = speed (15` looks good enough)
+%
+% [!] Model should have render mode: `13 Surface_XLU_No_AA`
+#export:Script $Script_UpdateModelAlpha
+{
+    Set   *Var6 *Var0
+    Set   *Var7 *Var1
+    Set   *Var8 *Var2
+    Call  SetModelCustomGfx ( *Var6 00000001 FFFFFFFF )
+    Call  SetCustomGfxBuilders  ( 00000001 $Function_InitDisplayListCode 00000000 )
+    If *Var7 == .False % 0x00 - Fade
+        Set *Var0 FF % start opacity
+        Set *Var1 0 % final opacity
+    Else % 0x01 - Unfade
+        Set *Var0 0
+        Set *Var1 FF
+    EndIf
+    Call  MakeLerp  ( *Var0 *Var1 *Var8 .Easing:Linear )
+    Loop
+        Call  UpdateLerp
+        Call  $Function_UpdateOpacity    ( *Var0 )
+        Wait  1`
+        If  *Var1  ==  .False
+            BreakLoop
+        EndIf
+    EndLoop
+    Return
+    End
+}
+
+#new:Unknown $Data_ModelOpacity
+{
+	00000000
+}
+
+#new:Function $Function_InitDisplayListCode
+{
+    LI        A2, FC121624 % G_SETCOMBINE
+    LUI       A1, FF2F
+    LA        A0, 8009A66C
+    LW        V0, 0 (A0)
+    ORI       A1, A1, FFFF
+    COPY      V1, V0
+    ADDIU     V0, V0, 8
+    SW        V0, 0 (A0)
+    SW        A2, 0 (V1)
+    SW        A1, 4 (V1)
+    ADDIU     V1, V0, 8
+    SW        V1, 0 (A0)
+    LAW       A0, $Data_ModelOpacity
+    LUI       V1, FA00 % G_SETPRIMCOLOR
+    SW        V1, 0 (V0)
+    JR        RA
+    SW        A0, 4 (V0)
+}
+
+% read arg1 and update $Data_ModelOpacity
+#new:Function $Function_UpdateOpacity
+{
+    ADDIU     SP, SP, FFE8
+    SW        RA, 10 (SP)
+    LW        V0, C (A0)
+    JAL       ~Func:get_variable
+    LW        A1, 0 (V0)
+    LW        RA, 10 (SP)
+    SAW       V0, $Data_ModelOpacity
+    LI        V0, 2
+    JR        RA
+    ADDIU     SP, SP, 18
+}

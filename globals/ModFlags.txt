@@ -1,2 +1,2 @@
-000 = MF_HasJumped
-001 = MF_CancelledJump
+000 = MF_CancelledJump
+001 = MF_UsedHammer

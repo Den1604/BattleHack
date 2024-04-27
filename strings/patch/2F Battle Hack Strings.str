@@ -46,3 +46,9 @@ Phase 3 End String.[Wait][End]
 [Style Right]
 2 Jumps in one Jump.[Wait][End]
 }
+
+#string:2F:008
+{
+[Style Right]
+You hammer me now u die.[Wait][End]
+}
