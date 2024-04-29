@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="btl_bt01" author="unnamed" textures="hos_tex">
 	<Editor>
-		<Camera pos="41.221062,116.468567,462.181213" pitch="9.000000" yaw="0.000000"/>
-		<Camera pos="-116.928375,65536.000000,9.332351"/>
-		<Camera pos="65536.000000,52.477741,-0.839917"/>
-		<Camera pos="0.000000,67.000000,65536.000000"/>
+		<Camera pos="-62.753323,135.856110,357.623322" pitch="12.520084" yaw="354.879364"/>
+		<Camera pos="68.005241,65536.000000,1.947645"/>
+		<Camera pos="65536.000000,30.989109,21.781754"/>
+		<Camera pos="0.818091,25.744457,65536.000000"/>
 	</Editor>
 	<ModelTree>
 		<Node name="Root" id="19">
@@ -50,7 +50,7 @@
 		<Node name="Root" id="0"/>
 	</ZoneTree>
 	<MarkerTree>
-		<Node name="Root" id="10">
+		<Node name="Root" id="14">
 			<Node name="Home Position 0" id="FFFFFFFF"/>
 			<Node name="Home Position 1" id="0"/>
 			<Node name="Home Position 2" id="1"/>
@@ -68,6 +68,10 @@
 			<Node name="Home Position E" id="D"/>
 			<Node name="Home Position F" id="E"/>
 			<Node name="Home Position 10" id="F"/>
+			<Node name="PathFlour" id="10"/>
+			<Node name="PathEgg" id="11"/>
+			<Node name="PathSugar" id="12"/>
+			<Node name="PathEgg" id="13"/>
 		</Node>
 	</MarkerTree>
 	<LightSets>
@@ -879,7 +883,51 @@
 	</Zones>
 	<Markers>
 		<Marker ver="4" type="Root">
-			<MapObject name="Root" id="10"/>
+			<MapObject name="Root" id="14"/>
+		</Marker>
+		<Marker ver="4" type="Path" pos="-295,50,-55" yaw="0.000000">
+			<MapObject name="PathEgg" id="13" hidden="true"/>
+			<Path>
+				<Waypoint pos="-295,50,-55"/>
+				<Waypoint pos="-235,3,4"/>
+				<Waypoint pos="-135,50,32"/>
+				<Waypoint pos="-35,69,4"/>
+				<Waypoint pos="65,50,-5"/>
+				<Waypoint pos="98,50,-6"/>
+			</Path>
+		</Marker>
+		<Marker ver="4" type="Path" pos="-295,-7,0" yaw="0.000000">
+			<MapObject name="PathSugar" id="12" hidden="true"/>
+			<Path>
+				<Waypoint pos="-295,-7,0"/>
+				<Waypoint pos="-235,50,46"/>
+				<Waypoint pos="-135,84,-1"/>
+				<Waypoint pos="-35,50,-19"/>
+				<Waypoint pos="65,46,-1"/>
+				<Waypoint pos="98,50,-6"/>
+			</Path>
+		</Marker>
+		<Marker ver="4" type="Path" pos="-295,50,55" yaw="0.000000">
+			<MapObject name="PathEgg" id="11" hidden="true"/>
+			<Path>
+				<Waypoint pos="-295,50,55"/>
+				<Waypoint pos="-235,97,-4"/>
+				<Waypoint pos="-135,50,-32"/>
+				<Waypoint pos="-35,31,-4"/>
+				<Waypoint pos="65,50,3"/>
+				<Waypoint pos="98,50,-6"/>
+			</Path>
+		</Marker>
+		<Marker ver="4" type="Path" pos="-295,106,0" yaw="0.000000">
+			<MapObject name="PathFlour" id="10"/>
+			<Path>
+				<Waypoint pos="-295,106,0"/>
+				<Waypoint pos="-235,46,-46"/>
+				<Waypoint pos="-135,17,-1"/>
+				<Waypoint pos="-35,46,17"/>
+				<Waypoint pos="65,54,-1"/>
+				<Waypoint pos="98,50,-6"/>
+			</Path>
 		</Marker>
 		<Marker ver="4" type="Position" pos="105,0,0" yaw="0.000000">
 			<MapObject name="Home Position 10" id="F" hidden="true"/>

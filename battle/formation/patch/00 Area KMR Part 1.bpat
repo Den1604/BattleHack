@@ -411,11 +411,11 @@
 	[Index]         D4b
 	[Level]         5`b
 	[MaxHP]         10`b
-	[Coins]         1`b
+	[Coins]         0`b
 	[Flags]       00200004
 	[StatusTable] $StatusTable_ThickGuy
 	% ai
-	[PartsCount]    1`s
+	[PartsCount]    2`s
 	[PartsTable]  $PartsTable_ThickGuy
 	[Script]      $Script_Init_ThickGuy
 	% move effectiveness
@@ -462,6 +462,7 @@
 #new:PartsTable $PartsTable_ThickGuy
 {
 	00020001 01000000 004000FF $IdleAnimations_ThickGuy $DefenseTable_ThickGuy 00000000 00000000 00F60000 00000000
+	00120001 02000000 000000FF $IdleAnimations_Flour 00000000 00000000 00000000 00F00000 00000000
 }
 
 #new:Script $Script_Init_ThickGuy
@@ -501,6 +502,7 @@
   Set     *Var1 1 % unfade
   Set     *Var2 15` % speed
   Exec    $Script_UpdateModelAlpha
+  Exec $Script_FlourToGourmet
   %
   % Three scripts that move the items into the mouth
   %
@@ -519,6 +521,74 @@
   Call  UseIdleAnimation  ( .Actor:Self .True )
 	Return
 	End
+}
+
+#new:Script $Script_FlourToGourmet
+{
+  Set *Var1 -295`
+  Set *Var2 106`
+  Set *Var3 0`
+  Call SetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 )
+  Call SetPartFlagBits   ( .Actor:Self 00000002 00000001 .False )
+  Call  LoadPath  ( 185` $VectorList_FlourPath 6` .Easing:Linear )
+  Loop
+    Call  GetNextPathPos ( )
+    Call SetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 )
+    Wait  1`
+    If *Var0 == 0`
+      BreakLoop
+    EndIf
+	EndLoop
+  % Call SetPartMoveSpeed  ( .Actor:Self 00000002 *Fixed[5.0] )
+  % Call SetPartJumpGravity    ( .Actor:Self 00000002 *Fixed[0.1] )
+  % Call GetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 ) %From -295 106 0 to -235 46 -46
+  % Add *Var1 60`
+  % Sub *Var2 60`
+  % Sub *Var3 46`
+  % Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 0` 0` 0 )
+  % Call GetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 ) %From -235 46 -46 to -135 17 -1
+  % Add *Var1 100`
+  % Sub *Var2 29`
+  % Add *Var3 45`
+  % Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 0` 0` 0 )
+  % Call GetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 ) %From -135 17 -1 to -35 46 17
+  % Add *Var1 100`
+  % Add *Var2 29`
+  % Add *Var3 18`
+  % Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 0` 0` 0 )
+  % Call GetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 ) %From -35 46 17 to 65 54 -1
+  % Add *Var1 100`
+  % Add *Var2 8`
+  % Sub *Var3 18`
+  % Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 0` 0` 0 )
+  % Call GetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 ) %From 65 54 -1 to 98 50 -6
+  % Add *Var1 33`
+  % Sub *Var2 4`
+  % Sub *Var3 5`
+  % Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 0` 0` 0 )
+  Call SetPartFlagBits   ( .Actor:Self 00000002 00000001 .True )
+  Return
+  End
+}
+
+#new:VectorList $VectorList_FlourPath
+{
+  -295.000000 106.000000 0.000000
+  -235.000000 46.000000 -46.000000
+  -135.000000 17.000000 -1.000000
+  -35.000000 46.000000 17.000000
+  65.000000 54.000000 -1.000000
+  98.000000 50.000000 -6.000000
+}
+
+#new:VectorList $VectorList_FlourPathShortened
+{
+  -147.000000 53.000000 0.000000
+  -117.000000 23.000000 -23.000000
+  -67.000000 9.000000 0.000000
+  -17.000000 23.000000 9.000000
+  32.000000 27.000000 0.000000
+  49.000000 25.000000 -3.000000
 }
 
 #new:Script $Script_HandleEvent_ThickGuy
@@ -648,6 +718,30 @@
 {
 	.Element:Normal 00000000
 	.Element:End
+}
+
+#new:IdleAnimations $IdleAnimations_Flour
+{
+	.Status:Normal    00C1000F
+	.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_Egg
+{
+	.Status:Normal    00C10010
+	.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_Sugar
+{
+	.Status:Normal    00C10011
+	.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_Strawberry
+{
+	.Status:Normal    00C10012
+	.Status:End
 }
 
 #new:Stage $Stage_StarHaven

@@ -193,7 +193,7 @@
 		<Sprite id="BE" src="BE" name="Oaklie"/>
 		<Sprite id="BF" src="BF" name="Bootler"/>
 		<Sprite id="C0" src="C0" name="Yakkey"/>
-		<Sprite id="C1" src="C1" name="Gourmet Guy"/>
+		<Sprite id="C1" src="C1 - Gourmet Guy" name="Gourmet Guy"/>
 		<Sprite id="C2" src="C2" name="Village Leader"/>
 		<Sprite id="C3" src="C3" name="Leaders Friend"/>
 		<Sprite id="C4" src="C4" name="Rafael Raven"/>
