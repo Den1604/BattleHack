@@ -95,17 +95,11 @@
 		</Animation>
 		<Animation name="Anim_05">
 			<Component name="Comp_00" xyz="0,0,0">
-				<Command val="1004"/>
-				<Command val="3001"/>
-				<Command val="FFF7"/>
-				<Command val="0"/>
-				<Command val="0"/>
-				<Command val="A"/>
 				<Command val="100E"/>
 				<Command val="A"/>
 				<Command val="100F"/>
 				<Command val="A"/>
-				<Command val="2006"/>
+				<Command val="2000"/>
 				<Command val="8"/>
 			</Component>
 		</Animation>
@@ -159,12 +153,12 @@
 				<Command val="6"/>
 				<Command val="1011"/>
 				<Command val="28"/>
+				<Command val="2002"/>
 				<Command val="1012"/>
 				<Command val="A"/>
 				<Command val="1000"/>
 				<Command val="2"/>
 				<Command val="8201"/>
-				<Command val="2006"/>
 			</Component>
 		</Animation>
 		<Animation name="Anim_0D">
@@ -213,6 +207,21 @@
 				<Command val="1019"/>
 				<Command val="2"/>
 				<Command val="2000"/>
+			</Component>
+		</Animation>
+		<Animation name="Anim_13">
+			<Component name="Comp_00" xyz="0,0,0">
+				<Command val="1004"/>
+				<Command val="3001"/>
+				<Command val="FFF7"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="1E"/>
+				<Command val="100E"/>
+				<Command val="A"/>
+				<Command val="100F"/>
+				<Command val="A"/>
+				<Command val="2008"/>
 			</Component>
 		</Animation>
 	</AnimationList>

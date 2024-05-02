@@ -415,7 +415,7 @@
 	[Flags]       00200004
 	[StatusTable] $StatusTable_ThickGuy
 	% ai
-	[PartsCount]    2`s
+	[PartsCount]    5`s
 	[PartsTable]  $PartsTable_ThickGuy
 	[Script]      $Script_Init_ThickGuy
 	% move effectiveness
@@ -463,6 +463,9 @@
 {
 	00020001 01000000 004000FF $IdleAnimations_ThickGuy $DefenseTable_ThickGuy 00000000 00000000 00F60000 00000000
 	00120001 02000000 000000FF $IdleAnimations_Flour 00000000 00000000 00000000 00F00000 00000000
+	00120001 03000000 000000FF $IdleAnimations_Egg 00000000 00000000 00000000 00F00000 00000000
+	00120001 04000000 000000FF $IdleAnimations_Sugar 00000000 00000000 00000000 00F00000 00000000
+	00120001 05000000 000000FF $IdleAnimations_Strawberry 00000000 00000000 00000000 00F00000 00000000
 }
 
 #new:Script $Script_Init_ThickGuy
@@ -470,7 +473,8 @@
   Call  SetActorPos ( .Actor:Self 45` 0` -10` )
   Call  ForceHomePos ( .Actor:Self 45` 0` -10` )
   Call  HPBarToHome ( .Actor:Self )
-	Call  BindTakeTurn      ( .Actor:Self $Script_TakeTurn_ThickGuy )
+  Call SetActorVar ( .Actor:Self 00000001 00000000 )
+  Call  BindTakeTurn      ( .Actor:Self $Script_TakeTurn_ThickGuy )
 	Call  BindIdle  ( .Actor:Self $Script_Idle_ThickGuy )
 	Call  BindHandleEvent   ( .Actor:Self $Script_HandleEvent_ThickGuy )
 	Return
@@ -488,8 +492,34 @@
 
 #new:Script $Script_TakeTurn_ThickGuy
 {
+  Call GetActorVar ( .Actor:Self 00000001 *Var0 )
+  Switch *Var0
+    Case == 0`
+      ExecWait $Script_Attack_IngredientSpit
+      Call SetActorVar ( .Actor:Self 00000001 00000003 )
+    Case > 0`
+      Call RandInt ( 1` *Var0 )
+      If *Var0 == 1`
+        ExecWait $Script_Attack_Stomp
+      Else
+        ExecWait $Script_Attack_Chewing
+      EndIf
+      Call GetActorVar ( .Actor:Self 00000001 *Var0 )
+      Sub *Var0 1`
+      Call SetActorVar ( .Actor:Self 00000001 *Var0 )
+    EndCaseGroup
+  EndSwitch
+  Return
+  End
+}
+
+#new:Script $Script_Attack_IngredientSpit
+{
   Call  UseIdleAnimation  ( .Actor:Self .False )
   Call  EnableIdleScript  ( .Actor:Self 00000000 )
+  %
+  % WALK BACKWARS
+  %
   Call GetActorPos ( .Actor:Self *VarA *VarB *VarC )
   Add *VarA 68`
   Call SetGoalPos ( .Actor:Self *VarA *VarB *VarC )
@@ -498,20 +528,160 @@
   Call RunToGoal ( .Actor:Self 0` .True )
   Call SetAnimation ( .Actor:Self 00000001 00C1000E )
   Call PlaySoundAtActor ( .Actor:Self 00000288 )
+  %
+  % SUCKLONE SUCKING IN INGREDIENTS
+  %
   Set     *Var0 ~Model:btl_bt01:Sucklone
   Set     *Var1 1 % unfade
   Set     *Var2 15` % speed
   Exec    $Script_UpdateModelAlpha
   Exec $Script_FlourToGourmet
-  %
-  % Three scripts that move the items into the mouth
-  %
+  Wait 30`
+  Exec $Script_EggToGourmet
+  Wait 30`
+  Exec $Script_SugarToGourmet
+  Wait 30`
+  Exec $Script_StrawberryToGourmet
   Wait 185`
   Set     *Var0 ~Model:btl_bt01:Sucklone
   Set     *Var1 0 % fade
   Set     *Var2 15` % speed
   Exec    $Script_UpdateModelAlpha
-  Wait 15`
+  Thread
+    Loop  4`
+      Call  PlaySoundAtActor  ( .Actor:Player 00002095 )
+      Wait  10`
+    EndLoop
+  EndThread
+  Call SetAnimation ( .Actor:Self 00000001 00C10005 )
+  Wait 40`
+  %
+  % SPITTING FLOUR AT MARIO
+  %
+  Call SetAnimation ( .Actor:Self 00000001 00C10001 )
+  Wait 12`
+  Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  Call SetTargetActor ( .Actor:Self .Actor:Player )
+  Call SetGoalToTarget ( .Actor:Self )
+  Call PlaySoundAtActor ( .Actor:Self 0000029A )
+  Call SetAnimation ( .Actor:Self 00000001 00C1000E )
+  Call SetPartRotation ( .Actor:Self 00000002 0` 0` 0` )
+  Call SetPartFlagBits   ( .Actor:Self 00000002 00000001 .False )
+  Set *VarA 0`
+  Thread
+    Loop 20`
+      Add *VarA 5`
+      Call SetPartRotation ( .Actor:Self 00000002 0` 0` *VarA  )
+      Wait 1`
+    EndLoop
+  EndThread
+  Call GetActorPos ( .Actor:Player *Var1 *Var2 *Var3 )
+  Add *Var2 40`
+  Thread
+    Wait 20`
+    Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000001 00000020 )
+  EndThread
+  Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 20` *Fixed[0.5] .Easing:Linear )
+  Sub *Var1 90`
+  Call SetPartJumpGravity ( .Actor:Self 00000002 *Fixed[1.0] )
+  Call JumpPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 15` .False )
+  Call SetPartFlagBits   ( .Actor:Self 00000002 00000001 .True )
+  %
+  % SPITTING EGG AT MARIO
+  %
+  Call SetAnimation ( .Actor:Self 00000001 00C10001 )
+  Wait 12`
+  Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  Call SetTargetActor ( .Actor:Self .Actor:Player )
+  Call SetGoalToTarget ( .Actor:Self )
+  Call PlaySoundAtActor ( .Actor:Self 0000029A )
+  Call SetAnimation ( .Actor:Self 00000001 00C1000E )
+  Call SetPartRotation ( .Actor:Self 00000003 0` 0` 0` )
+  Call SetPartFlagBits   ( .Actor:Self 00000003 00000001 .False )
+  Set *VarA 0`
+  Thread
+    Loop 20`
+      Add *VarA 5`
+      Call SetPartRotation ( .Actor:Self 00000003 0` 0` *VarA  )
+      Wait 1`
+    EndLoop
+  EndThread
+  Call GetActorPos ( .Actor:Player *Var1 *Var2 *Var3 )
+  Add *Var2 40`
+  Thread
+    Wait 20`
+    Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000002 00000020 )
+  EndThread
+  Call FlyPartTo ( .Actor:Self 00000003 *Var1 *Var2 *Var3 20` *Fixed[0.5] .Easing:Linear )
+  Sub *Var1 90`
+  Call SetPartJumpGravity ( .Actor:Self 00000003 *Fixed[1.0] )
+  Call JumpPartTo ( .Actor:Self 00000003 *Var1 *Var2 *Var3 15` .False )
+  Call SetPartFlagBits   ( .Actor:Self 00000003 00000001 .True )
+  %
+  % SPITTING SUGAR AT MARIO, DIZZY FOR 1 TURN IF UNBLOCKED
+  %
+  Call SetAnimation ( .Actor:Self 00000001 00C10001 )
+  Wait 12`
+  Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  Call SetTargetActor ( .Actor:Self .Actor:Player )
+  Call SetGoalToTarget ( .Actor:Self )
+  Call PlaySoundAtActor ( .Actor:Self 0000029A )
+  Call SetAnimation ( .Actor:Self 00000001 00C1000E )
+  Call SetPartRotation ( .Actor:Self 00000004 0` 0` 0` )
+  Call SetPartFlagBits   ( .Actor:Self 00000004 00000001 .False )
+  Set *VarA 0`
+  Thread
+    Loop 20`
+      Add *VarA 5`
+      Call SetPartRotation ( .Actor:Self 00000004 0` 0` *VarA  )
+      Wait 1`
+    EndLoop
+  EndThread
+  Call GetActorPos ( .Actor:Player *Var1 *Var2 *Var3 )
+  Add *Var2 40`
+  Thread
+    Wait 20`
+    Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 ~DebuffType:Dizzy:1:100` 00000002 00000020 )
+  EndThread
+  Call FlyPartTo ( .Actor:Self 00000004 *Var1 *Var2 *Var3 20` *Fixed[0.5] .Easing:Linear )
+  Sub *Var1 90`
+  Call SetPartJumpGravity ( .Actor:Self 00000004 *Fixed[1.0] )
+  Call JumpPartTo ( .Actor:Self 00000004 *Var1 *Var2 *Var3 15` .False )
+  Call SetPartFlagBits   ( .Actor:Self 00000004 00000001 .True )
+  %
+  % SPITTING STRAWBERRY AT MARIO
+  %
+  Call SetAnimation ( .Actor:Self 00000001 00C10001 )
+  Wait 12`
+  Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  Call SetTargetActor ( .Actor:Self .Actor:Player )
+  Call SetGoalToTarget ( .Actor:Self )
+  Call PlaySoundAtActor ( .Actor:Self 0000029A )
+  Call SetAnimation ( .Actor:Self 00000001 00C1000E )
+  Call SetPartRotation ( .Actor:Self 00000005 0` 0` 0` )
+  Call SetPartFlagBits   ( .Actor:Self 00000005 00000001 .False )
+  Set *VarA 0`
+  Thread
+    Loop 20`
+      Add *VarA 5`
+      Call SetPartRotation ( .Actor:Self 00000005 0` 0` *VarA  )
+      Wait 1`
+    EndLoop
+  EndThread
+  Call GetActorPos ( .Actor:Player *Var1 *Var2 *Var3 )
+  Add *Var2 40`
+  Thread
+    Wait 20`
+    Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000001 00000020 )
+  EndThread
+  Call FlyPartTo ( .Actor:Self 00000005 *Var1 *Var2 *Var3 20` *Fixed[0.5] .Easing:Linear )
+  Sub *Var1 90`
+  Call SetPartJumpGravity ( .Actor:Self 00000005 *Fixed[1.0] )
+  Call JumpPartTo ( .Actor:Self 00000005 *Var1 *Var2 *Var3 15` .False )
+  Call SetPartFlagBits   ( .Actor:Self 00000005 00000001 .True )
+  %
+  % WALK TO HOME
+  %
   Call SetAnimation ( .Actor:Self 00000001 00C10001 )
   Call SetGoalToHome ( .Actor:Self )
   Call SetActorSpeed ( .Actor:Self *Fixed[1.0] )
@@ -529,8 +699,17 @@
   Set *Var2 106`
   Set *Var3 0`
   Call SetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 )
+  Call SetPartRotation ( .Actor:Self 00000002 0` 0` 0` )
   Call SetPartFlagBits   ( .Actor:Self 00000002 00000001 .False )
-  Call  LoadPath  ( 185` $VectorList_FlourPath 6` .Easing:Linear )
+  Set *VarA 0`
+  Thread
+    Loop 145`
+      Add *VarA 5`
+      Call SetPartRotation ( .Actor:Self 00000002 *VarA  0` 0` )
+      Wait 1`
+    EndLoop
+  EndThread
+  Call  LoadPath  ( 145` $VectorList_FlourPath 6` .Easing:Linear )
   Loop
     Call  GetNextPathPos ( )
     Call SetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 )
@@ -539,34 +718,97 @@
       BreakLoop
     EndIf
 	EndLoop
-  % Call SetPartMoveSpeed  ( .Actor:Self 00000002 *Fixed[5.0] )
-  % Call SetPartJumpGravity    ( .Actor:Self 00000002 *Fixed[0.1] )
-  % Call GetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 ) %From -295 106 0 to -235 46 -46
-  % Add *Var1 60`
-  % Sub *Var2 60`
-  % Sub *Var3 46`
-  % Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 0` 0` 0 )
-  % Call GetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 ) %From -235 46 -46 to -135 17 -1
-  % Add *Var1 100`
-  % Sub *Var2 29`
-  % Add *Var3 45`
-  % Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 0` 0` 0 )
-  % Call GetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 ) %From -135 17 -1 to -35 46 17
-  % Add *Var1 100`
-  % Add *Var2 29`
-  % Add *Var3 18`
-  % Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 0` 0` 0 )
-  % Call GetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 ) %From -35 46 17 to 65 54 -1
-  % Add *Var1 100`
-  % Add *Var2 8`
-  % Sub *Var3 18`
-  % Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 0` 0` 0 )
-  % Call GetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 ) %From 65 54 -1 to 98 50 -6
-  % Add *Var1 33`
-  % Sub *Var2 4`
-  % Sub *Var3 5`
-  % Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 0` 0` 0 )
   Call SetPartFlagBits   ( .Actor:Self 00000002 00000001 .True )
+  Return
+  End
+}
+
+#new:Script $Script_EggToGourmet
+{
+  Set *Var1 -295`
+  Set *Var2 50`
+  Set *Var3 55`
+  Call SetPartPos ( .Actor:Self 00000003 *Var1 *Var2 *Var3 )
+  Call SetPartRotation ( .Actor:Self 00000003 0` 0` 0` )
+  Call SetPartFlagBits   ( .Actor:Self 00000003 00000001 .False )
+  Set *VarA 0`
+  Thread
+    Loop 145`
+      Add *VarA 5`
+      Call SetPartRotation ( .Actor:Self 00000003 *VarA  0` 0` )
+      Wait 1`
+    EndLoop
+  EndThread
+  Call  LoadPath  ( 145` $VectorList_EggPath 6` .Easing:Linear )
+  Loop
+    Call  GetNextPathPos ( )
+    Call SetPartPos ( .Actor:Self 00000003 *Var1 *Var2 *Var3 )
+    Wait  1`
+    If *Var0 == 0`
+      BreakLoop
+    EndIf
+	EndLoop
+  Call SetPartFlagBits   ( .Actor:Self 00000003 00000001 .True )
+  Return
+  End
+}
+
+#new:Script $Script_SugarToGourmet
+{
+  Set *Var1 -295`
+  Set *Var2 -7`
+  Set *Var3 0`
+  Call SetPartPos ( .Actor:Self 00000004 *Var1 *Var2 *Var3 )
+  Call SetPartRotation ( .Actor:Self 00000004 0` 0` 0` )
+  Call SetPartFlagBits   ( .Actor:Self 00000004 00000001 .False )
+  Set *VarA 0`
+  Thread
+    Loop 145`
+      Add *VarA 5`
+      Call SetPartRotation ( .Actor:Self 00000004 *VarA  0` 0` )
+      Wait 1`
+    EndLoop
+  EndThread
+  Call  LoadPath  ( 145` $VectorList_SugarPath 6` .Easing:Linear )
+  Loop
+    Call  GetNextPathPos ( )
+    Call SetPartPos ( .Actor:Self 00000004 *Var1 *Var2 *Var3 )
+    Wait  1`
+    If *Var0 == 0`
+      BreakLoop
+    EndIf
+	EndLoop
+  Call SetPartFlagBits   ( .Actor:Self 00000004 00000001 .True )
+  Return
+  End
+}
+
+#new:Script $Script_StrawberryToGourmet
+{
+  Set *Var1 -295`
+  Set *Var2 50`
+  Set *Var3 -55`
+  Call SetPartPos ( .Actor:Self 00000005 *Var1 *Var2 *Var3 )
+  Call SetPartRotation ( .Actor:Self 00000005 0` 0` 0` )
+  Call SetPartFlagBits   ( .Actor:Self 00000005 00000001 .False )
+  Set *VarA 0`
+  Thread
+    Loop 145`
+      Add *VarA 5`
+      Call SetPartRotation ( .Actor:Self 00000005 *VarA  0` 0` )
+      Wait 1`
+    EndLoop
+  EndThread
+  Call  LoadPath  ( 145` $VectorList_StrawberryPath 6` .Easing:Linear )
+  Loop
+    Call  GetNextPathPos ( )
+    Call SetPartPos ( .Actor:Self 00000005 *Var1 *Var2 *Var3 )
+    Wait  1`
+    If *Var0 == 0`
+      BreakLoop
+    EndIf
+	EndLoop
+  Call SetPartFlagBits   ( .Actor:Self 00000005 00000001 .True )
   Return
   End
 }
@@ -578,17 +820,180 @@
   -135.000000 17.000000 -1.000000
   -35.000000 46.000000 17.000000
   65.000000 54.000000 -1.000000
-  98.000000 50.000000 -6.000000
+  90.000000 35.000000 3.000000
 }
 
-#new:VectorList $VectorList_FlourPathShortened
+#new:VectorList $VectorList_EggPath
 {
-  -147.000000 53.000000 0.000000
-  -117.000000 23.000000 -23.000000
-  -67.000000 9.000000 0.000000
-  -17.000000 23.000000 9.000000
-  32.000000 27.000000 0.000000
-  49.000000 25.000000 -3.000000
+  -295.000000 50.000000 55.000000
+  -235.000000 97.000000 -4.000000
+  -135.000000 50.000000 -32.000000
+  -35.000000 31.000000 -4.000000
+  65.000000 50.000000 3.000000
+  90.000000 35.000000 3.000000
+}
+
+#new:VectorList $VectorList_SugarPath
+{
+  -295.000000 -7.000000 0.000000
+  -235.000000 50.000000 46.000000
+  -135.000000 84.000000 -1.000000
+  -35.000000 50.000000 -19.000000
+  65.000000 46.000000 -1.000000
+  90.000000 35.000000 3.000000
+}
+
+#new:VectorList $VectorList_StrawberryPath
+{
+  -295.000000 50.000000 -55.000000
+  -235.000000 3.000000 4.000000
+  -135.000000 50.000000 32.000000
+  -35.000000 69.000000 4.000000
+  65.000000 50.000000 -5.000000
+  90.000000 35.000000 3.000000
+}
+
+#new:Script $Script_Attack_Stomp
+{
+  Call UseIdleAnimation ( .Actor:Self .False )
+  Call EnableIdleScript  ( .Actor:Self 00000000 )
+  Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  Call SetTargetActor ( .Actor:Self .Actor:Player )
+  Call SetGoalToTarget ( .Actor:Self )
+  %
+  % JUMPS ON MARIO
+  %
+  Call SetAnimation ( .Actor:Self 00000001 00C10002 )
+  Call SetActorSpeed ( .Actor:Self *Fixed[2.5] )
+  Call GetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+  Add *VarA 40`
+  Call SetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+  Call  UseBattleCamPreset    ( 0000003F )
+  Call  BattleCamTargetActor  ( .Actor:Self )
+  Call RunToGoal ( .Actor:Self 0` .True )
+  Call SetAnimation ( .Actor:Self 00000001 00C10001 )
+  Wait 15`
+  Call SetGoalToTarget ( .Actor:Self )
+  Call GetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+  Set *VarB 0`
+  Add *VarC 15`
+  Call SetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+  Call SetActorJumpGravity ( .Actor:Self *Fixed[1.75] )
+  Call JumpToGoal ( .Actor:Self 15` .True .True .True )
+  Call SetGoalToTarget ( .Actor:Self )
+  Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000001 00000020 )
+  Thread
+    Call PlaySoundAtActor ( .Actor:Self 0000028E )
+    Wait 30`
+    Call StopSound ( 0000028E )
+  EndThread
+  Thread
+    Call ShakeCam ( .Cam:Battle 0` 30` 2` )
+  EndThread
+  Call GetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+  Set *VarB 0`
+  Sub *VarA 15`
+  Call SetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+  Call SetAnimation ( .Actor:Self 00000001 00C10002 )
+  Call SetActorJumpGravity ( .Actor:Self *Fixed[0.5] )
+  Call JumpToGoal ( .Actor:Self 15` .False .True .False )
+  Call SetAnimation ( .Actor:Self 00000001 00C10001 )
+  Call UseBattleCamPreset ( 00000002 )
+  Call SetGoalToHome ( .Actor:Self )
+  Call SetAnimation ( .Actor:Self 00000001 00C10002 )
+  Call RunToGoal ( .Actor:Self 15` .True )
+  Call EnableIdleScript  ( .Actor:Self 00000001 )
+  Call UseIdleAnimation ( .Actor:Self .True )
+  Return
+  End
+}
+
+#new:Script $Script_Attack_Chewing
+{
+  Call UseIdleAnimation ( .Actor:Self .False )
+  Call EnableIdleScript  ( .Actor:Self 00000000 )
+  Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  Call SetTargetActor ( .Actor:Self .Actor:Player )
+  Call SetGoalToTarget ( .Actor:Self )
+  %
+  % WALK UP TO MARIO
+  %
+  Call SetAnimation ( .Actor:Self 00000001 00C10002 )
+  Call SetActorSpeed ( .Actor:Self *Fixed[2.5] )
+  Call GetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+  Add *VarA 15`
+  Sub *VarC 20`
+  Call SetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+  Call  UseBattleCamPreset    ( 0000003F )
+  Call  BattleCamTargetActor  ( .Actor:Self )
+  Call RunToGoal ( .Actor:Self 0` .True )
+  %
+  % EAT UP THAT GUY
+  %
+  Call SetAnimation ( .Actor:Self 00000001 00C1000C )
+  Wait 15`
+  Call SetAnimation ( .Actor:Self 00000001 00C10013 )
+  Call UseIdleAnimation ( .Actor:Player .False )
+  Call GetHomePos ( .Actor:Player *VarA *VarB *VarC )
+  Add *VarA 10`
+  Add *VarB 20`
+  Call SetGoalPos ( .Actor:Player *VarA *VarB *VarC )
+  Call SetAnimation ( .Actor:Player 00000001 0003000C )
+  Call FlyToGoal ( .Actor:Player 15` *Fixed[1.0] .Easing:Linear )
+  Add *VarA 15`
+  Add *VarB 5`
+  Sub *VarC 15`
+  Call SetGoalPos ( .Actor:Player *VarA *VarB *VarC )
+  Call SetAnimation ( .Actor:Player 00000001 0003000C )
+  Call FlyToGoal ( .Actor:Player 15` *Fixed[1.0] .Easing:Linear )
+  Call UseBattleCamPreset ( 00000002 )
+  Call SetActorPos ( .Actor:Player 0` -1000` 0` )
+  %
+  %GO BACK HOME NERD
+  %
+  Call SetGoalToHome ( .Actor:Self )
+  Call SetActorSpeed ( .Actor:Self *Fixed[2.5] )
+  Call SetAnimation ( .Actor:Self 00000001 00C10002 )
+  Call RunToGoal ( .Actor:Self 0` .True )
+  Call SetAnimation ( .Actor:Self 00000001 00C10001 )
+  Wait 10`
+  Call SetAnimation ( .Actor:Self 00000001 00C1000E )
+  Call GetHomePos ( .Actor:Self *VarA *VarB *VarC )
+  Add *VarB 20`
+  Add *VarC 10`
+  Call SetActorPos ( .Actor:Player *VarA *VarB *VarC )
+  %
+  %TIME TO SPIT EM OUT
+  %
+  % Call 802535B4 ( .False )
+  Call SetAnimation ( .Actor:Player 00000001 00030002 )
+  Set *Var1 0`
+  Thread
+    Loop 36`
+      Add *Var1 20`
+      Call SetActorRotation ( .Actor:Player 0` 0` *Var1 )
+      Wait 1`
+    EndLoop
+  EndThread
+  Call SetGoalToHome ( .Actor:Player )
+  Call SetActorJumpGravity ( .Actor:Self *Fixed[1.5] )
+  Call JumpToGoal ( .Actor:Player 36` .False .True .False )
+  Call SetTargetActor ( .Actor:Self .Actor:Player )
+  Call SetGoalToTarget ( .Actor:Self )
+  Wait 2`
+  Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000003 00000020 )
+  % Call 802535B4 ( .True )
+  %
+  %RESET ANIMS
+  %
+  Call SetAnimation ( .Actor:Self 00000001 00C10001 )
+  Call SetGoalToHome ( .Actor:Self )
+  Call SetAnimation ( .Actor:Self 00000001 00C10002 )
+  Call RunToGoal ( .Actor:Self 15` .True )
+  Call EnableIdleScript  ( .Actor:Self 00000001 )
+  Call UseIdleAnimation ( .Actor:Self .True )
+  Return
+  End
 }
 
 #new:Script $Script_HandleEvent_ThickGuy

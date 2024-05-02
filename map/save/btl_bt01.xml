@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="btl_bt01" author="unnamed" textures="hos_tex">
 	<Editor>
-		<Camera pos="-62.753323,135.856110,357.623322" pitch="12.520084" yaw="354.879364"/>
-		<Camera pos="68.005241,65536.000000,1.947645"/>
-		<Camera pos="65536.000000,30.989109,21.781754"/>
-		<Camera pos="0.818091,25.744457,65536.000000"/>
+		<Camera pos="-223.514236,69.537788,269.647339" pitch="5.800091" yaw="351.519806"/>
+		<Camera pos="-297.634857,65536.000000,1.673321"/>
+		<Camera pos="65536.000000,79.260033,10.430430"/>
+		<Camera pos="-146.319412,77.297142,65536.000000"/>
 	</Editor>
 	<ModelTree>
 		<Node name="Root" id="19">
@@ -50,7 +50,7 @@
 		<Node name="Root" id="0"/>
 	</ZoneTree>
 	<MarkerTree>
-		<Node name="Root" id="14">
+		<Node name="Root" id="15">
 			<Node name="Home Position 0" id="FFFFFFFF"/>
 			<Node name="Home Position 1" id="0"/>
 			<Node name="Home Position 2" id="1"/>
@@ -72,6 +72,7 @@
 			<Node name="PathEgg" id="11"/>
 			<Node name="PathSugar" id="12"/>
 			<Node name="PathEgg" id="13"/>
+			<Node name="a" id="14"/>
 		</Node>
 	</MarkerTree>
 	<LightSets>
@@ -883,7 +884,10 @@
 	</Zones>
 	<Markers>
 		<Marker ver="4" type="Root">
-			<MapObject name="Root" id="14"/>
+			<MapObject name="Root" id="15"/>
+		</Marker>
+		<Marker ver="4" type="Position" pos="-320,50,0" yaw="0.000000">
+			<MapObject name="a" id="14"/>
 		</Marker>
 		<Marker ver="4" type="Path" pos="-295,50,-55" yaw="0.000000">
 			<MapObject name="PathEgg" id="13" hidden="true"/>
@@ -919,14 +923,14 @@
 			</Path>
 		</Marker>
 		<Marker ver="4" type="Path" pos="-295,106,0" yaw="0.000000">
-			<MapObject name="PathFlour" id="10"/>
+			<MapObject name="PathFlour" id="10" hidden="true"/>
 			<Path>
 				<Waypoint pos="-295,106,0"/>
 				<Waypoint pos="-235,46,-46"/>
 				<Waypoint pos="-135,17,-1"/>
 				<Waypoint pos="-35,46,17"/>
 				<Waypoint pos="65,54,-1"/>
-				<Waypoint pos="98,50,-6"/>
+				<Waypoint pos="79,50,-6"/>
 			</Path>
 		</Marker>
 		<Marker ver="4" type="Position" pos="105,0,0" yaw="0.000000">
