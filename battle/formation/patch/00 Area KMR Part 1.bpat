@@ -494,6 +494,7 @@
 {
   Call GetActorHP ( .Actor:Self *Var0 )
   If *Var0 <= 5`
+    ExecWait $Script_QuizShow
     Return
   EndIf
   Call GetActorVar ( .Actor:Self 00000001 *Var0 )
@@ -515,6 +516,24 @@
   EndSwitch
   Return
   End
+}
+
+#new:Script $Script_QuizShow{
+  Call ActorSpeak ( $ThickGuyQ1 .Actor:Self 00000001 003B0011 003B0001 )
+  Call ShowChoice ( $Q1Choice )
+  Call CloseMessage ()
+  If *Var[0] == 2
+		Call PlaySound ( 008D )
+    Call ActorSpeak ( $ThickGuyCorrect .Actor:Self 00000001 003B0011 003B0001 )
+  Else
+    Call PlaySound ( 008B )
+		Call PlaySound ( 021D )
+    Call ActorSpeak ( $ThickGuyIncorrect .Actor:Self 00000001 003B0011 003B0001 )
+    Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000002 00000020 )
+  EndIf
+  Return
+  End
+
 }
 
 #new:Script $Script_Attack_IngredientSpit
@@ -1450,3 +1469,29 @@
     JR          RA
     ADDIU       SP, SP, 18
 }
+
+#new:String $ThickGuyQ1
+{
+[Style Right]Question 1: [br][wait][next]
+True or false:[br]
+This sentence is false.[br][yield][end]
+}
+
+#new:String $Q1Choice
+{
+	[Style Choice pos=105,60 size=100,46]
+	[StartChoice]
+	[Option 0]True[BR]
+	[Option 1]False[BR]
+	[Option 2][BR]
+	[EndChoice][End]
+}
+
+#new:String $ThickGuyCorrect
+{
+[Style Right]Correct! Let's move on![wait][end]
+}
+
+#new:String $ThickGuyIncorrect
+{
+[Style Right]That is Incorrect. Take this![wait][end]}
