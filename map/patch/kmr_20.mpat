@@ -1,6 +1,8 @@
 @ $Script_8024FD70
 {
   Call $GivePlayerStartingEquipment (  )
+  Set *GB_StoryProgress 81
+  Call AddItem ( .Item:Mushroom 00000000 )
   Call GotoMap ( "btl_01" 00000001 )
   Wait 300`
   Return

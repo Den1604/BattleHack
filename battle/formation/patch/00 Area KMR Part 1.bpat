@@ -118,7 +118,7 @@
 #new:Script $Script_TakeTurn_GourmetGuy
 {
   Call GetActorHP ( .Actor:Self *Var0 )
-  If *Var0 <= 12`
+  If *Var0 <= 5`
     Call UseIdleAnimation ( .Actor:Self .False )
     Call EnableIdleScript  ( .Actor:Self 00000000 )
     Call UseIdleAnimation ( .Actor:Enemy1 .False )
@@ -410,7 +410,7 @@
 	% stats
 	[Index]         D4b
 	[Level]         5`b
-	[MaxHP]         10`b
+	[MaxHP]         28`b
 	[Coins]         0`b
 	[Flags]       00200004
 	[StatusTable] $StatusTable_ThickGuy
@@ -492,6 +492,10 @@
 
 #new:Script $Script_TakeTurn_ThickGuy
 {
+  Call GetActorHP ( .Actor:Self *Var0 )
+  If *Var0 <= 5`
+    Return
+  EndIf
   Call GetActorVar ( .Actor:Self 00000001 *Var0 )
   Switch *Var0
     Case == 0`
@@ -881,7 +885,7 @@
   Call SetActorJumpGravity ( .Actor:Self *Fixed[1.75] )
   Call JumpToGoal ( .Actor:Self 15` .True .True .True )
   Call SetGoalToTarget ( .Actor:Self )
-  Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000001 00000020 )
+  Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000004 00000020 )
   Thread
     Call PlaySoundAtActor ( .Actor:Self 0000028E )
     Wait 30`
