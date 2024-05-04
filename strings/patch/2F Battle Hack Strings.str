@@ -1,53 +1,59 @@
-#string:2F:000
+#message:2F:000
 {
 [Style Tattle]
 [PrintRising]I'm outta here![/fx][br]
 [Pause:15][End]
 }
 
-#string:2F:001
+#message:2F:001
 {
 [Style Right]
 Die.[Wait][End]
 }
 
-#string:2F:002
+#message:2F:002
 {
 [Style Right]
 Phase 1 End String.[Wait][End]
 }
 
-#string:2F:003
+#message:2F:003
 {
 [Style Right]
 Phase 2 Start String.[Wait][End]
 }
 
-#string:2F:004
+#message:2F:004
 {
 [Style Right]
-Phase 2 End String.[Wait][End]
+You're doing better than[BR]
+I expected...[BR]
+I suppose it is time for[BR]
+me to go all out.[Wait][End]
 }
 
-#string:2F:005
+#message:2F:005
 {
 [Style Right]
-Phase 3 Start String.[Wait][End]
+In today's once in a lifetime[BR]
+mid-battle...[BR]
+[Wait][End]
 }
 
-#string:2F:006
+#message:2F:006
 {
 [Style Right]
-Phase 3 End String.[Wait][End]
+[Size 48][CenterX 140][PrintRising]QUIZ SHOW![/fx][BR]
+[Wait][End]
 }
 
-#string:2F:007
+#message:2F:007
 {
 [Style Right]
 2 Jumps in one Jump.[Wait][End]
 }
 
-#string:2F:008
+#message:2F:008
 {
 [Style Right]
 You hammer me now u die.[Wait][End]

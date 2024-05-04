@@ -474,8 +474,9 @@
   Call  ForceHomePos ( .Actor:Self 45` 0` -10` )
   Call  HPBarToHome ( .Actor:Self )
   Call SetActorVar ( .Actor:Self 00000001 00000000 )
-  Call  BindTakeTurn      ( .Actor:Self $Script_TakeTurn_ThickGuy )
 	Call  BindIdle  ( .Actor:Self $Script_Idle_ThickGuy )
+  Call  BindTakeTurn      ( .Actor:Self $Script_TakeTurn_ThickGuy )
+  Call BindNextTurn ( .Actor:Self $Script_NextTurn_ThickGuy )
 	Call  BindHandleEvent   ( .Actor:Self $Script_HandleEvent_ThickGuy )
 	Return
 	End
@@ -492,28 +493,82 @@
 
 #new:Script $Script_TakeTurn_ThickGuy
 {
-  Call GetActorHP ( .Actor:Self *Var0 )
-  If *Var0 <= 5`
-    ExecWait $Script_QuizShow
-    Return
+  If *MF_StartQuiz == .False
+    Call GetActorHP ( .Actor:Self *Var0 )
+    If *Var0 <= 20` %REVERT TO 5!! DEBUG!!!!
+      Set *MF_StartQuiz .True
+      Return
+    EndIf
+    Call GetActorVar ( .Actor:Self 00000001 *Var0 )
+    Switch *Var0
+      Case == 0`
+        ExecWait $Script_Attack_IngredientSpit
+        Call SetActorVar ( .Actor:Self 00000001 00000003 )
+      Case > 0`
+        Call RandInt ( 1` *Var0 )
+        If *Var0 == 1`
+          ExecWait $Script_Attack_Stomp
+        Else
+          ExecWait $Script_Attack_Chewing
+        EndIf
+        Call GetActorVar ( .Actor:Self 00000001 *Var0 )
+        Sub *Var0 1`
+        Call SetActorVar ( .Actor:Self 00000001 *Var0 )
+      EndCaseGroup
+    EndSwitch
   EndIf
-  Call GetActorVar ( .Actor:Self 00000001 *Var0 )
-  Switch *Var0
-    Case == 0`
-      ExecWait $Script_Attack_IngredientSpit
-      Call SetActorVar ( .Actor:Self 00000001 00000003 )
-    Case > 0`
-      Call RandInt ( 1` *Var0 )
-      If *Var0 == 1`
-        ExecWait $Script_Attack_Stomp
-      Else
-        ExecWait $Script_Attack_Chewing
-      EndIf
-      Call GetActorVar ( .Actor:Self 00000001 *Var0 )
-      Sub *Var0 1`
-      Call SetActorVar ( .Actor:Self 00000001 *Var0 )
-    EndCaseGroup
-  EndSwitch
+  Return
+  End
+}
+
+#new:Script $Script_InitiateQuizShow
+{
+  Call  UseIdleAnimation  ( .Actor:Self .False )
+  Call  EnableIdleScript  ( .Actor:Self 00000000 )
+  %
+  %TELL MARIO TO PREPARE AND FADE TO BLACK
+  %
+  Call ActorSpeak ( 02F0004 .Actor:Self 00000001 003B0004 003B0001 )
+  Call 802535B4 ( .False )
+  SetF    *Var[0] *Fixed[12.5]  % speed
+  SetF    *Var[1] *Fixed[255.0] % fully dark
+  ExecWait $Script_FadeScreenOut
+  Call SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_ThickGuy_Anti )
+  Call ActorSpeak ( 02F0005 .Actor:Self 00000001 003B0504 003B0501 )
+  Thread
+    Call FadeOutMusic ( 00000000 2750` )
+    Wait 191`
+    Call FadeInMusic ( 00000000 .Song:PleasantPath 00000000 2750` 00000000 00000000 )
+  EndThread
+  Wait 191`
+  %
+  %POP QUIZ BATTLE MAP IN FROM NOWHERE
+  %
+  Call EnableGroup ( ~Model:btl_bt01:QuizStage .True )
+  Call EnableGroup ( ~Model:btl_bt01:MainStage .False )
+  Exec $Script_QuizModelMovement
+  SetF    *Var[0] *Fixed[50.0] % speed
+  SetF    *Var[1] *Fixed[5.0]  % fully bright
+  ExecWait $Script_FadeScreenIn
+  Call ActorSpeak ( 02F0006 .Actor:Self 00000001 003B0504 003B0501 )
+  Call 802535B4 ( .True )
+  Set *MB_CurrentQuiz_Stage 1`
+  Call  EnableIdleScript  ( .Actor:Self 00000001 )
+  Call  UseIdleAnimation  ( .Actor:Self .True )
+  Return
+  End
+}
+
+#new:Script $Script_QuizModelMovement
+{
+  Loop
+    Call EnableModel ( ~Model:btl_bt01:QuizLights1 .True )
+    Call EnableModel ( ~Model:btl_bt01:QuizLights2 .False )
+    Wait 10`
+    Call EnableModel ( ~Model:btl_bt01:QuizLights1 .False )
+    Call EnableModel ( ~Model:btl_bt01:QuizLights2 .True )
+    Wait 10`
+  EndLoop
   Return
   End
 }
@@ -533,7 +588,6 @@
   EndIf
   Return
   End
-
 }
 
 #new:Script $Script_Attack_IngredientSpit
@@ -1019,6 +1073,20 @@
   End
 }
 
+#new:Script $Script_NextTurn_ThickGuy
+{
+  If *MF_StartQuiz == .True
+    Switch *MB_CurrentQuiz_Stage %0 is Setup, 1 is Quiz, 2 is Finale
+      Case == 0`
+        ExecWait $Script_InitiateQuizShow
+      Case == 1`
+      Case == 2`
+    EndSwitch
+  EndIf
+  Return
+  End
+}
+
 #new:Script $Script_HandleEvent_ThickGuy
 {
     0:  Call  UseIdleAnimation  ( .Actor:Self .False )
@@ -1142,6 +1210,12 @@
 	.Status:End
 }
 
+#new:IdleAnimations $IdleAnimations_ThickGuy_Anti
+{
+	.Status:Normal    00C10501
+	.Status:End
+}
+
 #new:DefenseTable $DefenseTable_ThickGuy
 {
 	.Element:Normal 00000000
@@ -1192,7 +1266,8 @@
   Set     *Var0 ~Model:btl_bt01:Sucklone
   Set     *Var1 0 % fade
   Set     *Var2 1` % speed
-  Exec    $Script_UpdateModelAlpha
+  ExecWait    $Script_UpdateModelAlpha
+  Call EnableGroup ( ~Model:btl_bt01:QuizStage .False )
 	Return
 	End
 }

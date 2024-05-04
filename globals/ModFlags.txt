@@ -1,2 +1,3 @@
 000 = MF_CancelledJump
 001 = MF_UsedHammer
+002 = MF_StartQuiz
