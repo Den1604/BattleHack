@@ -26,7 +26,7 @@
 	% stats
 	[Index]         D4b
 	[Level]         5`b
-	[MaxHP]         14`b
+	[MaxHP]         12`b
 	[Coins]         1`b
 	[Flags]       00000000
 	[StatusTable] $StatusTable_GourmetGuy
@@ -118,7 +118,7 @@
 #new:Script $Script_TakeTurn_GourmetGuy
 {
   Call GetActorHP ( .Actor:Self *Var0 )
-  If *Var0 <= 5`
+  If *Var0 <= 3`
     Call UseIdleAnimation ( .Actor:Self .False )
     Call EnableIdleScript  ( .Actor:Self 00000000 )
     Call UseIdleAnimation ( .Actor:Enemy1 .False )
@@ -409,8 +409,8 @@
 {
 	% stats
 	[Index]         D4b
-	[Level]         5`b
-	[MaxHP]         28`b
+	[Level]         201`b
+	[MaxHP]         22`b
 	[Coins]         0`b
 	[Flags]       00200004
 	[StatusTable] $StatusTable_ThickGuy
@@ -495,8 +495,10 @@
 {
   If *MF_StartQuiz == .False
     Call GetActorHP ( .Actor:Self *Var0 )
-    If *Var0 <= 20` %REVERT TO 5!! DEBUG!!!!
-      Set *MF_StartQuiz .True
+    If *Var0 <= 3`
+      If *MF_StartQuiz == .False
+        Set *MF_StartQuiz .True
+      EndIf
       Return
     EndIf
     Call GetActorVar ( .Actor:Self 00000001 *Var0 )
@@ -516,75 +518,9 @@
         Call SetActorVar ( .Actor:Self 00000001 *Var0 )
       EndCaseGroup
     EndSwitch
-  EndIf
-  Return
-  End
-}
-
-#new:Script $Script_InitiateQuizShow
-{
-  Call  UseIdleAnimation  ( .Actor:Self .False )
-  Call  EnableIdleScript  ( .Actor:Self 00000000 )
-  %
-  %TELL MARIO TO PREPARE AND FADE TO BLACK
-  %
-  Call ActorSpeak ( 02F0004 .Actor:Self 00000001 003B0004 003B0001 )
-  Call 802535B4 ( .False )
-  SetF    *Var[0] *Fixed[12.5]  % speed
-  SetF    *Var[1] *Fixed[255.0] % fully dark
-  ExecWait $Script_FadeScreenOut
-  Call SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_ThickGuy_Anti )
-  Call ActorSpeak ( 02F0005 .Actor:Self 00000001 003B0504 003B0501 )
-  Thread
-    Call FadeOutMusic ( 00000000 2750` )
-    Wait 191`
-    Call FadeInMusic ( 00000000 .Song:PleasantPath 00000000 2750` 00000000 00000000 )
-  EndThread
-  Wait 191`
-  %
-  %POP QUIZ BATTLE MAP IN FROM NOWHERE
-  %
-  Call EnableGroup ( ~Model:btl_bt01:QuizStage .True )
-  Call EnableGroup ( ~Model:btl_bt01:MainStage .False )
-  Exec $Script_QuizModelMovement
-  SetF    *Var[0] *Fixed[50.0] % speed
-  SetF    *Var[1] *Fixed[5.0]  % fully bright
-  ExecWait $Script_FadeScreenIn
-  Call ActorSpeak ( 02F0006 .Actor:Self 00000001 003B0504 003B0501 )
-  Call 802535B4 ( .True )
-  Set *MB_CurrentQuiz_Stage 1`
-  Call  EnableIdleScript  ( .Actor:Self 00000001 )
-  Call  UseIdleAnimation  ( .Actor:Self .True )
-  Return
-  End
-}
-
-#new:Script $Script_QuizModelMovement
-{
-  Loop
-    Call EnableModel ( ~Model:btl_bt01:QuizLights1 .True )
-    Call EnableModel ( ~Model:btl_bt01:QuizLights2 .False )
-    Wait 10`
-    Call EnableModel ( ~Model:btl_bt01:QuizLights1 .False )
-    Call EnableModel ( ~Model:btl_bt01:QuizLights2 .True )
-    Wait 10`
-  EndLoop
-  Return
-  End
-}
-
-#new:Script $Script_QuizShow{
-  Call ActorSpeak ( $ThickGuyQ1 .Actor:Self 00000001 003B0011 003B0001 )
-  Call ShowChoice ( $Q1Choice )
-  Call CloseMessage ()
-  If *Var[0] == 2
-		Call PlaySound ( 008D )
-    Call ActorSpeak ( $ThickGuyCorrect .Actor:Self 00000001 003B0011 003B0001 )
   Else
-    Call PlaySound ( 008B )
-		Call PlaySound ( 021D )
-    Call ActorSpeak ( $ThickGuyIncorrect .Actor:Self 00000001 003B0011 003B0001 )
-    Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000002 00000020 )
+    Set *MB_CurrentQuiz_Stage 1`
+    Return
   EndIf
   Return
   End
@@ -619,7 +555,7 @@
   Exec $Script_SugarToGourmet
   Wait 30`
   Exec $Script_StrawberryToGourmet
-  Wait 185`
+  Wait 95`
   Set     *Var0 ~Model:btl_bt01:Sucklone
   Set     *Var1 0 % fade
   Set     *Var2 15` % speed
@@ -636,7 +572,7 @@
   % SPITTING FLOUR AT MARIO
   %
   Call SetAnimation ( .Actor:Self 00000001 00C10001 )
-  Wait 12`
+  Wait 6`
   Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
   Call SetTargetActor ( .Actor:Self .Actor:Player )
   Call SetGoalToTarget ( .Actor:Self )
@@ -646,8 +582,8 @@
   Call SetPartFlagBits   ( .Actor:Self 00000002 00000001 .False )
   Set *VarA 0`
   Thread
-    Loop 20`
-      Add *VarA 5`
+    Loop 10`
+      Add *VarA 10`
       Call SetPartRotation ( .Actor:Self 00000002 0` 0` *VarA  )
       Wait 1`
     EndLoop
@@ -655,10 +591,10 @@
   Call GetActorPos ( .Actor:Player *Var1 *Var2 *Var3 )
   Add *Var2 40`
   Thread
-    Wait 20`
+    Wait 10`
     Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000001 00000020 )
   EndThread
-  Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 20` *Fixed[0.5] .Easing:Linear )
+  Call FlyPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 10` *Fixed[0.5] .Easing:Linear )
   Sub *Var1 90`
   Call SetPartJumpGravity ( .Actor:Self 00000002 *Fixed[1.0] )
   Call JumpPartTo ( .Actor:Self 00000002 *Var1 *Var2 *Var3 15` .False )
@@ -667,7 +603,7 @@
   % SPITTING EGG AT MARIO
   %
   Call SetAnimation ( .Actor:Self 00000001 00C10001 )
-  Wait 12`
+  Wait 6`
   Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
   Call SetTargetActor ( .Actor:Self .Actor:Player )
   Call SetGoalToTarget ( .Actor:Self )
@@ -677,8 +613,8 @@
   Call SetPartFlagBits   ( .Actor:Self 00000003 00000001 .False )
   Set *VarA 0`
   Thread
-    Loop 20`
-      Add *VarA 5`
+    Loop 10`
+      Add *VarA 10`
       Call SetPartRotation ( .Actor:Self 00000003 0` 0` *VarA  )
       Wait 1`
     EndLoop
@@ -686,10 +622,10 @@
   Call GetActorPos ( .Actor:Player *Var1 *Var2 *Var3 )
   Add *Var2 40`
   Thread
-    Wait 20`
+    Wait 10`
     Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000002 00000020 )
   EndThread
-  Call FlyPartTo ( .Actor:Self 00000003 *Var1 *Var2 *Var3 20` *Fixed[0.5] .Easing:Linear )
+  Call FlyPartTo ( .Actor:Self 00000003 *Var1 *Var2 *Var3 10` *Fixed[0.5] .Easing:Linear )
   Sub *Var1 90`
   Call SetPartJumpGravity ( .Actor:Self 00000003 *Fixed[1.0] )
   Call JumpPartTo ( .Actor:Self 00000003 *Var1 *Var2 *Var3 15` .False )
@@ -698,7 +634,7 @@
   % SPITTING SUGAR AT MARIO, DIZZY FOR 1 TURN IF UNBLOCKED
   %
   Call SetAnimation ( .Actor:Self 00000001 00C10001 )
-  Wait 12`
+  Wait 6`
   Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
   Call SetTargetActor ( .Actor:Self .Actor:Player )
   Call SetGoalToTarget ( .Actor:Self )
@@ -708,8 +644,8 @@
   Call SetPartFlagBits   ( .Actor:Self 00000004 00000001 .False )
   Set *VarA 0`
   Thread
-    Loop 20`
-      Add *VarA 5`
+    Loop 10`
+      Add *VarA 10`
       Call SetPartRotation ( .Actor:Self 00000004 0` 0` *VarA  )
       Wait 1`
     EndLoop
@@ -717,10 +653,10 @@
   Call GetActorPos ( .Actor:Player *Var1 *Var2 *Var3 )
   Add *Var2 40`
   Thread
-    Wait 20`
+    Wait 10`
     Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 ~DebuffType:Dizzy:1:100` 00000002 00000020 )
   EndThread
-  Call FlyPartTo ( .Actor:Self 00000004 *Var1 *Var2 *Var3 20` *Fixed[0.5] .Easing:Linear )
+  Call FlyPartTo ( .Actor:Self 00000004 *Var1 *Var2 *Var3 10` *Fixed[0.5] .Easing:Linear )
   Sub *Var1 90`
   Call SetPartJumpGravity ( .Actor:Self 00000004 *Fixed[1.0] )
   Call JumpPartTo ( .Actor:Self 00000004 *Var1 *Var2 *Var3 15` .False )
@@ -729,7 +665,7 @@
   % SPITTING STRAWBERRY AT MARIO
   %
   Call SetAnimation ( .Actor:Self 00000001 00C10001 )
-  Wait 12`
+  Wait 6`
   Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
   Call SetTargetActor ( .Actor:Self .Actor:Player )
   Call SetGoalToTarget ( .Actor:Self )
@@ -739,8 +675,8 @@
   Call SetPartFlagBits   ( .Actor:Self 00000005 00000001 .False )
   Set *VarA 0`
   Thread
-    Loop 20`
-      Add *VarA 5`
+    Loop 10`
+      Add *VarA 10`
       Call SetPartRotation ( .Actor:Self 00000005 0` 0` *VarA  )
       Wait 1`
     EndLoop
@@ -748,10 +684,10 @@
   Call GetActorPos ( .Actor:Player *Var1 *Var2 *Var3 )
   Add *Var2 40`
   Thread
-    Wait 20`
+    Wait 10`
     Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000001 00000020 )
   EndThread
-  Call FlyPartTo ( .Actor:Self 00000005 *Var1 *Var2 *Var3 20` *Fixed[0.5] .Easing:Linear )
+  Call FlyPartTo ( .Actor:Self 00000005 *Var1 *Var2 *Var3 10` *Fixed[0.5] .Easing:Linear )
   Sub *Var1 90`
   Call SetPartJumpGravity ( .Actor:Self 00000005 *Fixed[1.0] )
   Call JumpPartTo ( .Actor:Self 00000005 *Var1 *Var2 *Var3 15` .False )
@@ -780,13 +716,13 @@
   Call SetPartFlagBits   ( .Actor:Self 00000002 00000001 .False )
   Set *VarA 0`
   Thread
-    Loop 145`
+    Loop 73`
       Add *VarA 5`
       Call SetPartRotation ( .Actor:Self 00000002 *VarA  0` 0` )
       Wait 1`
     EndLoop
   EndThread
-  Call  LoadPath  ( 145` $VectorList_FlourPath 6` .Easing:Linear )
+  Call  LoadPath  ( 73` $VectorList_FlourPath 6` .Easing:Linear )
   Loop
     Call  GetNextPathPos ( )
     Call SetPartPos ( .Actor:Self 00000002 *Var1 *Var2 *Var3 )
@@ -810,13 +746,13 @@
   Call SetPartFlagBits   ( .Actor:Self 00000003 00000001 .False )
   Set *VarA 0`
   Thread
-    Loop 145`
+    Loop 73`
       Add *VarA 5`
       Call SetPartRotation ( .Actor:Self 00000003 *VarA  0` 0` )
       Wait 1`
     EndLoop
   EndThread
-  Call  LoadPath  ( 145` $VectorList_EggPath 6` .Easing:Linear )
+  Call  LoadPath  ( 73` $VectorList_EggPath 6` .Easing:Linear )
   Loop
     Call  GetNextPathPos ( )
     Call SetPartPos ( .Actor:Self 00000003 *Var1 *Var2 *Var3 )
@@ -840,13 +776,13 @@
   Call SetPartFlagBits   ( .Actor:Self 00000004 00000001 .False )
   Set *VarA 0`
   Thread
-    Loop 145`
+    Loop 73`
       Add *VarA 5`
       Call SetPartRotation ( .Actor:Self 00000004 *VarA  0` 0` )
       Wait 1`
     EndLoop
   EndThread
-  Call  LoadPath  ( 145` $VectorList_SugarPath 6` .Easing:Linear )
+  Call  LoadPath  ( 73` $VectorList_SugarPath 6` .Easing:Linear )
   Loop
     Call  GetNextPathPos ( )
     Call SetPartPos ( .Actor:Self 00000004 *Var1 *Var2 *Var3 )
@@ -870,13 +806,13 @@
   Call SetPartFlagBits   ( .Actor:Self 00000005 00000001 .False )
   Set *VarA 0`
   Thread
-    Loop 145`
+    Loop 73`
       Add *VarA 5`
       Call SetPartRotation ( .Actor:Self 00000005 *VarA  0` 0` )
       Wait 1`
     EndLoop
   EndThread
-  Call  LoadPath  ( 145` $VectorList_StrawberryPath 6` .Easing:Linear )
+  Call  LoadPath  ( 73` $VectorList_StrawberryPath 6` .Easing:Linear )
   Loop
     Call  GetNextPathPos ( )
     Call SetPartPos ( .Actor:Self 00000005 *Var1 *Var2 *Var3 )
@@ -1011,6 +947,7 @@
   Wait 15`
   Call SetAnimation ( .Actor:Self 00000001 00C10013 )
   Call UseIdleAnimation ( .Actor:Player .False )
+  Call EnableIdleScript ( .Actor:Player .False )
   Call GetHomePos ( .Actor:Player *VarA *VarB *VarC )
   Add *VarA 10`
   Add *VarB 20`
@@ -1053,7 +990,7 @@
     EndLoop
   EndThread
   Call SetGoalToHome ( .Actor:Player )
-  Call SetActorJumpGravity ( .Actor:Self *Fixed[1.5] )
+  Call SetActorJumpGravity ( .Actor:Player *Fixed[1.5] )
   Call JumpToGoal ( .Actor:Player 36` .False .True .False )
   Call SetTargetActor ( .Actor:Self .Actor:Player )
   Call SetGoalToTarget ( .Actor:Self )
@@ -1063,6 +1000,8 @@
   %
   %RESET ANIMS
   %
+  Call EnableIdleScript ( .Actor:Player .True )
+  Call UseIdleAnimation ( .Actor:Player .True )
   Call SetAnimation ( .Actor:Self 00000001 00C10001 )
   Call SetGoalToHome ( .Actor:Self )
   Call SetAnimation ( .Actor:Self 00000001 00C10002 )
@@ -1076,13 +1015,243 @@
 #new:Script $Script_NextTurn_ThickGuy
 {
   If *MF_StartQuiz == .True
-    Switch *MB_CurrentQuiz_Stage %0 is Setup, 1 is Quiz, 2 is Finale
+    Switch *MB_CurrentQuiz_Stage %0 is Setup, 1 is Quiz, 2 is Finale, 3 is for skipping it to give mario his turn
       Case == 0`
+        Set *MB_CurrentQuiz_Stage 1`
         ExecWait $Script_InitiateQuizShow
+        Return
       Case == 1`
+        ExecWait $Script_QuizShow
+        Set *MB_CurrentQuiz_Stage 3`
+        Return
       Case == 2`
     EndSwitch
   EndIf
+  Return
+  End
+}
+
+#new:Script $Script_InitiateQuizShow
+{
+  Call  UseIdleAnimation  ( .Actor:Self .False )
+  Call  EnableIdleScript  ( .Actor:Self 00000000 )
+  %
+  %TELL MARIO TO PREPARE AND FADE TO BLACK
+  %
+  Call ActorSpeak ( 02F0004 .Actor:Self 00000001 003B0004 003B0001 )
+  Call 802535B4 ( .False )
+  SetF    *Var[0] *Fixed[12.5]  % speed
+  SetF    *Var[1] *Fixed[255.0] % fully dark
+  ExecWait $Script_FadeScreenOut
+  Call SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_ThickGuy_Anti )
+  Call ActorSpeak ( 02F0005 .Actor:Self 00000001 003B0504 003B0501 )
+  Thread
+    Call FadeOutMusic ( 00000000 2750` )
+    Wait 191`
+    Call FadeInMusic ( 00000000 .Song:PleasantPath 00000000 2750` 00000000 00000000 )
+  EndThread
+  Wait 191`
+  %
+  %POP QUIZ BATTLE MAP IN FROM NOWHERE
+  %
+  Call SetDefenseTable ( .Actor:Self 00000001 $DefenseTable_ThickGuy_Untouchable )
+  Call EnableGroup ( ~Model:btl_bt01:QuizStage .True )
+  Call EnableGroup ( ~Model:btl_bt01:MainStage .False )
+  % Call SetActorFlagBits ( .Actor:Self 00020000 .True )
+  % Call SetPartFlagBits ( .Actor:Self 00000001 00020000 .True )
+  Exec $Script_QuizModelMovement
+  SetF    *Var[0] *Fixed[50.0] % speed
+  SetF    *Var[1] *Fixed[5.0]  % fully bright
+  ExecWait $Script_FadeScreenIn
+  Call ActorSpeak ( 02F0006 .Actor:Self 00000001 003B0504 003B0501 )
+  Call 802535B4 ( .True )
+  Call  EnableIdleScript  ( .Actor:Self 00000001 )
+  Call  UseIdleAnimation  ( .Actor:Self .True )
+  Return
+  End
+}
+
+#new:Script $Script_QuizModelMovement
+{
+  Loop
+    Call EnableModel ( ~Model:btl_bt01:QuizLights1 .True )
+    Call EnableModel ( ~Model:btl_bt01:QuizLights2 .False )
+    Wait 30`
+    Call EnableModel ( ~Model:btl_bt01:QuizLights1 .False )
+    Call EnableModel ( ~Model:btl_bt01:QuizLights2 .True )
+    Wait 30`
+  EndLoop
+  Return
+  End
+}
+
+#new:Script $Script_QuizShow
+{
+  Call  UseIdleAnimation  ( .Actor:Self .False )
+  Call  EnableIdleScript  ( .Actor:Self 00000000 )
+  Call 802535B4 ( .False )
+  Switch *MB_CurrentQuiz_QuestionNumber
+    Case == 0` %True or False
+      Call ActorSpeak ( 002F000B .Actor:Self 00000001 003B0504 003B0501 )
+      Call ShowChoice ( 002F000C )
+      Call EndActorSpeech ( .Actor:Self 00000001 003B0504 003B0501 )
+      Call 802535B4 ( .True )
+      If *Var[0] == 2`
+        ExecWait $Script_Quiz_Correct
+        Return
+      Else
+        ExecWait $Script_Quiz_Incorrect
+        Return
+      EndIf
+      Case == 1` %Obama
+      Call ActorSpeak ( 002F000D .Actor:Self 00000001 003B0504 003B0501 )
+      Call ShowChoice ( 002F000E )
+      Call EndActorSpeech ( .Actor:Self 00000001 003B0504 003B0501 )
+      Call 802535B4 ( .True )
+      If *Var[0] == 2`
+        ExecWait $Script_Quiz_Correct
+        Return
+      Else
+        ExecWait $Script_Quiz_Incorrect
+        Return
+      EndIf
+    Case == 2` %Pokemon
+      Call ActorSpeak ( 002F000F .Actor:Self 00000001 003B0504 003B0501 )
+      Call ShowChoice ( 002F0010 )
+      Call EndActorSpeech ( .Actor:Self 00000001 003B0504 003B0501 )
+      Call 802535B4 ( .True )
+      If *Var[0] == 0`
+        ExecWait $Script_Quiz_Correct
+        Return
+      Else
+        ExecWait $Script_Quiz_Incorrect
+        Return
+      EndIf
+    Case == 3`
+      Call ActorSpeak ( 002F0011 .Actor:Self 00000001 003B0504 003B0501 )
+      Call ShowChoice ( 002F0012 )
+      Call EndActorSpeech ( .Actor:Self 00000001 003B0504 003B0501 )
+      Call 802535B4 ( .True )
+      If *Var[0] == 1`
+        ExecWait $Script_Quiz_Correct
+        Return
+      Else
+        ExecWait $Script_Quiz_Incorrect
+        Return
+      EndIf
+    Case == 4`
+      Call ActorSpeak ( 002F0013 .Actor:Self 00000001 003B0504 003B0501 )
+      Call ShowChoice ( 002F0014 )
+      Call EndActorSpeech ( .Actor:Self 00000001 003B0504 003B0501 )
+      Call 802535B4 ( .True )
+      ExecWait $Script_Quiz_Correct
+      Return
+      Case == 5`
+      Call ActorSpeak ( 002F0015 .Actor:Self 00000001 003B0504 003B0501 )
+      Call ShowChoice ( 002F0016 )
+      Call EndActorSpeech ( .Actor:Self 00000001 003B0504 003B0501 )
+      Call 802535B4 ( .True )
+      If *Var[0] == 1`
+        ExecWait $Script_Quiz_Correct
+        Return
+      Else
+        ExecWait $Script_Quiz_Incorrect
+        Return
+      EndIf
+    Case == 6`
+      Call ActorSpeak ( 002F0017 .Actor:Self 00000001 003B0504 003B0501 )
+      Call ShowChoice ( 002F0018 )
+      Call EndActorSpeech ( .Actor:Self 00000001 003B0504 003B0501 )
+      Call 802535B4 ( .True )
+      If *Var[0] == 1`
+        ExecWait $Script_Quiz_Correct
+        Return
+      Else
+        ExecWait $Script_Quiz_Incorrect
+        Return
+      EndIf
+    Case == 7`
+      Call ActorSpeak ( 002F0019 .Actor:Self 00000001 003B0504 003B0501 )
+      Call ShowChoice ( 002F001A )
+      Call EndActorSpeech ( .Actor:Self 00000001 003B0504 003B0501 )
+      Call 802535B4 ( .True )
+      If *Var[0] == 2`
+        ExecWait $Script_Quiz_Correct
+        Return
+      Else
+        ExecWait $Script_Quiz_Incorrect
+        Return
+      EndIf
+    Case == 8`
+      Call ActorSpeak ( 002F001B .Actor:Self 00000001 003B0504 003B0501 )
+      Call ShowChoice ( 002F001C )
+      Call EndActorSpeech ( .Actor:Self 00000001 003B0504 003B0501 )
+      Call 802535B4 ( .True )
+      If *Var[0] == 0`
+        ExecWait $Script_Quiz_Correct
+        Return
+      Else
+        ExecWait $Script_Quiz_Incorrect
+        Return
+      EndIf
+    Case == 9`
+      Call ActorSpeak ( 002F001D .Actor:Self 00000001 003B0504 003B0501 )
+      Call SetActorFlagBits ( .Actor:Self 00020000 .False )
+      Add *MB_CurrentQuiz_QuestionNumber 1`
+      Call SetEnemyHP ( .Actor:Self 00000001 )
+      Call AddItem ( .Item:Pebble 00000001 )
+      ExecWait $Script_PebbleFall
+      Call 802535B4 ( .True )
+      Return
+    Case == 10`
+      Call ActorSpeak ( 002F001E .Actor:Self 00000001 003B0504 003B0501 )
+      Call 802535B4 ( .True )
+      Return
+    EndSwitch
+  Call  EnableIdleScript  ( .Actor:Self 00000001 )
+  Call  UseIdleAnimation  ( .Actor:Self .True )
+  Return
+  End
+}
+
+#new:Script $Script_Quiz_Correct
+{
+  Call PlaySound ( 008D )
+  Add *MB_CurrentQuiz_QuestionNumber 1`
+  Return
+  End
+}
+
+#new:Script $Script_Quiz_Incorrect
+{
+  Call PlaySound ( 008B )
+  Call PlaySound ( 021D )
+  Call SetTargetActor ( .Actor:Self .Actor:Player )
+  Call SetGoalToTarget ( .Actor:Self )
+  Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000004 00000020 )
+  Add *MB_CurrentQuiz_QuestionNumber 1`
+  Return
+  End
+}
+
+#new:Script $Script_PebbleFall
+{
+  Loop 39`
+    Sub *Var1 5`
+    Call TranslateModel ( ~Model:btl_bt01:Pebble 0` *Var1 0` )
+    Wait 1`
+  EndLoop
+  Call ShakeCam ( .Cam:Battle 1` 5` 1` )
+  Wait 5`
+  Call EnableModel ( ~Model:btl_bt01:Pebble .False )
+  Wait 5`
+  Call EnableModel ( ~Model:btl_bt01:Pebble .True )
+  Wait 5`
+  Call EnableModel ( ~Model:btl_bt01:Pebble .False )
+  Wait 5`
+  Call EnableModel ( ~Model:btl_bt01:Pebble .True )
+  Wait 5`
+  Call EnableModel ( ~Model:btl_bt01:Pebble .False )
   Return
   End
 }
@@ -1097,13 +1266,17 @@
    64:  	CaseOR  ==  .Event:HitCombo % 9
    70:  	CaseOR  ==  .Event:Hit % A
    7C:  		SetConst  *Var0  00000001
-   8C:  		SetConst  *Var1  00C10008
+            If *MF_StartQuiz == .False
+              SetConst  *Var1  00C10008
+            Else
+              SetConst  *Var1  00C10014
+            EndIf
    9C:  		ExecWait  DoNormalHit
    A8:  	EndCaseGroup
    B0:  	Case  ==  .Event:BurnHit % E
    BC:  		SetConst  *Var0  00000001
-   CC:  		SetConst  *Var1  00260009
-   DC:  		SetConst  *Var2  0026000A
+   CC:  		SetConst  *Var1  00C10508
+   DC:  		SetConst  *Var2  00C10508
    EC:  		ExecWait  DoBurnHit
    F8:  	Case  ==  .Event:BurnDeath % 24
   104:  		SetConst  *Var0  00000001
@@ -1157,16 +1330,25 @@
   3FC:  	CaseOR  ==  .Event:Immune % 19
   408:  	CaseOR  ==  .Event:AirLiftFailed % 1F
   414:  		SetConst  *Var0  00000001
-  424:  		SetConst  *Var1  00260001
+  424:  		SetConst  *Var1  00C10501
   434:  		ExecWait  DoImmune
   440:  	EndCaseGroup
   448:  	Case  ==  .Event:Death % 20
   454:  		SetConst  *Var0  00000001
-  464:  		SetConst  *Var1  00C10008
+            If *MF_StartQuiz == .False
+  464:  		  SetConst  *Var1  00C10008
+            Else
+              SetConst  *Var1  00C10508
+            EndIf
   474:  		ExecWait  DoNormalHit
+            ExecWait $Script_ThickGuyDeath
   480:  		Wait  10`
   48C:  		SetConst  *Var0  00000001
-  49C:  		SetConst  *Var1  00C10007
+            If *MF_StartQuiz == .False
+              SetConst  *Var1  00C10007
+            Else
+              SetConst  *Var1  00C10507
+            EndIf
   4AC:  		ExecWait  DoDeath
   4B8:  		Return
   4C0:  	Case  ==  .Event:EndFirstStrike % 35
@@ -1204,6 +1386,13 @@
   6B8:  End
 }
 
+#new:Script $Script_ThickGuyDeath
+{
+  
+  Return
+  End
+}
+
 #new:IdleAnimations $IdleAnimations_ThickGuy
 {
 	.Status:Normal    00C10001
@@ -1219,6 +1408,12 @@
 #new:DefenseTable $DefenseTable_ThickGuy
 {
 	.Element:Normal 00000000
+	.Element:End
+}
+
+#new:DefenseTable $DefenseTable_ThickGuy_Untouchable
+{
+	.Element:Normal 000000FF
 	.Element:End
 }
 
@@ -1561,12 +1756,3 @@ This sentence is false.[br][yield][end]
 	[Option 2][BR]
 	[EndChoice][End]
 }
-
-#new:String $ThickGuyCorrect
-{
-[Style Right]Correct! Let's move on![wait][end]
-}
-
-#new:String $ThickGuyIncorrect
-{
-[Style Right]That is Incorrect. Take this![wait][end]}

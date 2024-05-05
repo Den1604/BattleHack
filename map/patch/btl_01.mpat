@@ -1,4 +1,5 @@
 #define .NpcID:GourmetGuy 00
+#define .NpcID:AntiGourmetGuy 01
 
 @ $Script_Main
 {
@@ -17,13 +18,14 @@
 #new:NpcGroupList $NpcGroupList_ShyGuy
 {
     00000001 $NpcGroup_ShyGuy 00000000
+    00000001 $NpcGroup_AntiShyGuy 00000000
     00000000 00000000 00000000
 }
 
 #new:NpcGroup $NpcGroup_ShyGuy
 {
 	.NpcID:GourmetGuy $NpcSettings_ShyGuy ~Vec3f:GourmetGuy
-	00002809 $Script_Init_ShyGuy 00000000 00000000 0000005A
+	00802809  $Script_Init_ShyGuy 00000000 00000000 0000005A
 	~NoDrops
 	~Movement:GourmetGuy
 	~AnimationTable:GourmetGuy 
@@ -40,6 +42,7 @@
 {
     Call  BindNpcIdle       ( .Npc:Self $Script_Idle_ShyGuy )
     Call  BindNpcInteract   ( .Npc:Self $Script_Interact_ShyGuy )
+	Call BindNpcDefeat ( .Npc:Self $Script_Defeat_ShyGuy )
     Return
     End
 }
@@ -58,4 +61,30 @@
     Call StartBossBattle ( .Song:WhaleTheme )
     Return
     End
+}
+
+#new:Script $Script_Defeat_ShyGuy
+{
+	Call GetNpcPos ( .NpcID:GourmetGuy *VarA *VarB *VarC )
+	Call SetNpcPos ( .NpcID:GourmetGuy 0` -1000` 0` )
+	Call SetNpcPos ( .NpcID:AntiGourmetGuy *VarA *VarB *VarC )
+	Call SpeakToPlayer ( .NpcID:AntiGourmetGuy 00C10504 00C10501 00000000 002F0020 )
+	Call SetNpcAnimation ( .NpcID:AntiGourmetGuy 00C1050B )
+	Call SetNpcJumpscale ( .NpcID:AntiGourmetGuy *Fixed[2.0] )
+	Call NpcJump0 ( .NpcID:AntiGourmetGuy 400` 0` 400` 45` )
+	Call SetMusicTrack ( 00000000 .Song:StarSpiritTheme 00000000 00000008 )
+	Call SetPlayerAnimation ( 00010033 )
+	Call ShowMessageAtScreenPos ( 002F0021 0` 0` )
+	Return
+	End
+}
+
+#new:NpcGroup $NpcGroup_AntiShyGuy
+{
+	.NpcID:AntiGourmetGuy $NpcSettings_ShyGuy ~Vec3f:AntiGourmetGuy
+	00802809 00000000 00000000 00000000 0000005A
+	~NoDrops
+	~Movement:AntiGourmetGuy
+	~AnimationTable:AntiGourmetGuy 
+	00000000 00000000 00000000 00000000 %Tattle String
 }

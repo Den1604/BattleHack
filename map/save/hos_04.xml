@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="hos_04" author="unnamed" background="hos_bg" textures="hos_tex">
 	<Editor>
-		<Camera pos="-173.055908,179.851532,-10.433610" pitch="12.359999" yaw="95.439980"/>
-		<Camera pos="8.029448,65536.000000,27.112404"/>
-		<Camera pos="65536.000000,117.627151,27.201939"/>
+		<Camera pos="-525.000000,131.567261,480.337128" pitch="9.999999" yaw="0.000000"/>
+		<Camera pos="-510.632416,65536.000000,261.132019"/>
+		<Camera pos="65536.000000,-63.417191,-60.937737"/>
 		<Camera pos="-1.000000,184.017273,65536.000000"/>
 	</Editor>
 	<ModelTree>
@@ -9674,7 +9674,7 @@
 			<HitObject type="ROOT"/>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="HullCollider" id="13"/>
+			<MapObject name="HullCollider" id="13" hidden="true"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -9702,7 +9702,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="NewLZCollider" id="12"/>
+			<MapObject name="NewLZCollider" id="12" hidden="true"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -9842,7 +9842,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="NewLZWall" id="11"/>
+			<MapObject name="NewLZWall" id="11" hidden="true"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -9876,7 +9876,7 @@
 			<HitObject type="GROUP"/>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="o489" id="E" dumped="true" fileOffset="4D4"/>
+			<MapObject name="o489" id="E" hidden="true" dumped="true" fileOffset="4D4"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -9898,7 +9898,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="8000">
-			<MapObject name="o486" id="D" dumped="true" fileOffset="4C8"/>
+			<MapObject name="o486" id="D" hidden="true" dumped="true" fileOffset="4C8"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -9930,7 +9930,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="8000">
-			<MapObject name="o481" id="C" dumped="true" fileOffset="4BC"/>
+			<MapObject name="o481" id="C" hidden="true" dumped="true" fileOffset="4BC"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -9954,7 +9954,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="8000">
-			<MapObject name="o485" id="B" dumped="true" fileOffset="4B0"/>
+			<MapObject name="o485" id="B" hidden="true" dumped="true" fileOffset="4B0"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -9978,7 +9978,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="o482" id="A" dumped="true" fileOffset="4A4"/>
+			<MapObject name="o482" id="A" hidden="true" dumped="true" fileOffset="4A4"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -10062,7 +10062,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="o175" id="9" dumped="true" fileOffset="498"/>
+			<MapObject name="o175" id="9" hidden="true" dumped="true" fileOffset="498"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -10156,7 +10156,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="o480" id="8" dumped="true" fileOffset="48C"/>
+			<MapObject name="o480" id="8" hidden="true" dumped="true" fileOffset="48C"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -10182,7 +10182,7 @@
 			<HitObject type="GROUP"/>
 		</Collider>
 		<Collider ver="0" flags="8000">
-			<MapObject name="o162" id="5" dumped="true" fileOffset="468"/>
+			<MapObject name="o162" id="5" hidden="true" dumped="true" fileOffset="468"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -10208,7 +10208,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="o163" id="4" dumped="true" fileOffset="45C"/>
+			<MapObject name="o163" id="4" hidden="true" dumped="true" fileOffset="45C"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -10230,7 +10230,7 @@
 			<HitObject type="GROUP"/>
 		</Collider>
 		<Collider ver="0" flags="8000">
-			<MapObject name="o150" id="2" dumped="true" fileOffset="444"/>
+			<MapObject name="o150" id="2" hidden="true" dumped="true" fileOffset="444"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -10254,7 +10254,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="8000">
-			<MapObject name="deilitnw" id="1" dumped="true" fileOffset="438"/>
+			<MapObject name="deilitnw" id="1" hidden="true" dumped="true" fileOffset="438"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -10272,7 +10272,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="deilinw" id="0" dumped="true" fileOffset="42C"/>
+			<MapObject name="deilinw" id="0" hidden="true" dumped="true" fileOffset="42C"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -10413,10 +10413,10 @@
 			<MapObject name="Root" id="9"/>
 		</Marker>
 		<Marker ver="4" type="Entry" pos="193,100,194" yaw="-60.000000">
-			<MapObject name="EntryNewLZ" id="8" hidden="true"/>
+			<MapObject name="EntryNewLZ" id="8"/>
 		</Marker>
 		<Marker ver="4" type="Path" pos="305,101,0" yaw="0.000000">
-			<MapObject name="Path_80241AC0" id="7" hidden="true"/>
+			<MapObject name="Path_80241AC0" id="7"/>
 			<Path>
 				<Waypoint pos="-669,98,-34"/>
 				<Waypoint pos="-669,68,-34"/>
@@ -10432,7 +10432,7 @@
 			<MapObject name="NPCs" id="6"/>
 		</Marker>
 		<Marker ver="4" type="NPC" pos="0,-1000,0" yaw="270.000000">
-			<MapObject name="Twink_00" id="5" hidden="true"/>
+			<MapObject name="Twink_00" id="5"/>
 			<Movement type="Stationary" data="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"/>
 			<Sprite sprite="20" palette="0" animations="1,5,8,8,1,1,1,1,1,1,1,1,1,1,1,1"/>
 		</Marker>
@@ -10440,19 +10440,19 @@
 			<MapObject name="Entrances" id="4"/>
 		</Marker>
 		<Marker ver="4" type="Entry" pos="-1570,0,0" yaw="90.000000">
-			<MapObject name="Entry4" id="3" hidden="true"/>
+			<MapObject name="Entry4" id="3"/>
 		</Marker>
 		<Marker ver="4" type="Entry" pos="-1570,0,0" yaw="90.000000">
-			<MapObject name="Entry3" id="2" hidden="true"/>
+			<MapObject name="Entry3" id="2"/>
 		</Marker>
 		<Marker ver="4" type="Entry" pos="0,0,0" yaw="0.000000">
-			<MapObject name="Entry2" id="1" hidden="true"/>
+			<MapObject name="Entry2" id="1"/>
 		</Marker>
 		<Marker ver="4" type="Entry" pos="100,100,0" yaw="270.000000">
-			<MapObject name="Entry1" id="0" hidden="true"/>
+			<MapObject name="Entry1" id="0"/>
 		</Marker>
 		<Marker ver="4" type="Entry" pos="-565,0,0" yaw="90.000000">
-			<MapObject name="Entry0" id="FFFFFFFF" hidden="true"/>
+			<MapObject name="Entry0" id="FFFFFFFF"/>
 		</Marker>
 	</Markers>
 	<ScriptData>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="btl_bt01" author="unnamed" textures="hos_tex">
 	<Editor>
-		<Camera pos="69.471176,85.789902,137.775284" pitch="3.240000" yaw="1.280336"/>
-		<Camera pos="-144.723740,65536.000000,-80.891716"/>
-		<Camera pos="65536.000000,96.949425,16.717035"/>
-		<Camera pos="33.815079,121.222359,65536.000000"/>
+		<Camera pos="-77.562408,90.656853,269.666626" pitch="9.000000" yaw="0.000000"/>
+		<Camera pos="-77.011246,65536.000000,-43.719643"/>
+		<Camera pos="65536.000000,36.966579,-9.973085"/>
+		<Camera pos="-100.510506,15.861297,65536.000000"/>
 	</Editor>
 	<ModelTree>
-		<Node name="Root" id="28">
+		<Node name="Root" id="29">
 			<Node name="Sucklone" id="0"/>
 			<Node name="MainStage" id="11">
 				<Node name="waku" id="1"/>
@@ -27,7 +27,7 @@
 				<Node name="o364" id="F"/>
 				<Node name="o363" id="10"/>
 			</Node>
-			<Node name="QuizStage" id="27">
+			<Node name="QuizStage" id="28">
 				<Node name="QuizWoodenBGFrame" id="12"/>
 				<Node name="QuizLightsBG" id="13"/>
 				<Node name="QuizFloorBack" id="14"/>
@@ -49,6 +49,7 @@
 				<Node name="Star2" id="24"/>
 				<Node name="Moon2" id="25"/>
 				<Node name="Star3" id="26"/>
+				<Node name="Pebble" id="27"/>
 			</Node>
 		</Node>
 	</ModelTree>
@@ -97,17 +98,43 @@
 	</LightSets>
 	<Models>
 		<Model ver="2" type="ROOT" lightset="1">
-			<MapObject name="Root" id="28" dumped="true" fileOffset="64B0"/>
-			<BoundingBox empty="false" min="-320,-40,-151" max="205,175,88"/>
+			<MapObject name="Root" id="29" dumped="true" fileOffset="64B0"/>
+			<BoundingBox empty="false" min="-320,-40,-151" max="205,215,88"/>
 			<PropertyList>
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="GROUP" lightset="0">
-			<MapObject name="QuizStage" id="27" hidden="true"/>
-			<BoundingBox empty="false" min="-206,-40,-151" max="205,175,88"/>
+			<MapObject name="QuizStage" id="28"/>
+			<BoundingBox empty="false" min="-206,-40,-151" max="205,215,88"/>
 			<PropertyList>
 				<Property v="60,0,0"/>
 				<Property v="60,0,1"/>
+			</PropertyList>
+		</Model>
+		<Model ver="2" type="MODEL" lightset="0">
+			<MapObject name="Pebble" id="27"/>
+			<ShapeMesh ver="3" texture="Pebble">
+				<DisplayList>
+					<F3DEX2 cmd="E7000000,0"/>
+					<F3DEX2 cmd="D9FDFFFF,0"/>
+					<F3DEX2 cmd="D9FFFFFF,200400"/>
+					<TriangleBatch ver="0">
+						<VertexTable>
+							<Vertex xyz="-84,190,-19"/>
+							<Vertex xyz="-60,215,-19" uv="1024,1024"/>
+							<Vertex xyz="-84,215,-19" uv="0,1024"/>
+							<Vertex xyz="-60,190,-19" uv="1024,0"/>
+						</VertexTable>
+						<TriangleList>
+							<Triangle ijk="0,1,2"/>
+							<Triangle ijk="1,0,3"/>
+						</TriangleList>
+					</TriangleBatch>
+				</DisplayList>
+			</ShapeMesh>
+			<PropertyList>
+				<Property v="5C,0,D"/>
+				<Property v="5F,0,0"/>
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
@@ -543,7 +570,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="QuizLights2" id="19" hidden="true"/>
+			<MapObject name="QuizLights2" id="19"/>
 			<ShapeMesh ver="3" texture="flo_botantif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -603,7 +630,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="QuizLights1" id="18" hidden="true"/>
+			<MapObject name="QuizLights1" id="18"/>
 			<ShapeMesh ver="3" texture="flo_botantif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1019,7 +1046,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="GROUP" lightset="0">
-			<MapObject name="MainStage" id="11" hidden="true"/>
+			<MapObject name="MainStage" id="11"/>
 			<BoundingBox empty="false" min="-206,-40,-151" max="205,175,88"/>
 			<PropertyList>
 				<Property v="60,0,0"/>

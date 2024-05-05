@@ -30,6 +30,12 @@
 {
     Set   *Var0  $Script_80241108
     ExecWait  EnterWalk
+    Call GetEntryID ( *Var0 )
+    If *Var0 == ~Entry:Entry0
+        Call DisablePlayerInput ( .True )
+        Call ShowMessageAtScreenPos ( 002F001F 0` 0` )
+        Call DisablePlayerInput ( .False )
+    EndIf
     Wait  20`
     Set *MapVar[0] 0`
     Return

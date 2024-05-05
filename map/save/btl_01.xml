@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="btl_01" author="unnamed" textures="hos_tex">
 	<Editor>
-		<Camera pos="146.992096,414.644440,-352.043671" pitch="21.480034" yaw="240.346298"/>
-		<Camera pos="10.193087,65536.000000,-283.745422"/>
+		<Camera pos="120.177505,197.798706,-449.260498" pitch="-0.159984" yaw="251.546371"/>
+		<Camera pos="21.511406,65536.000000,-304.601501"/>
 		<Camera pos="65536.000000,276.301025,-247.584381"/>
 		<Camera pos="717.471436,364.600586,65536.000000"/>
 	</Editor>
@@ -137,12 +137,13 @@
 		</Node>
 	</ZoneTree>
 	<MarkerTree>
-		<Node name="Root" id="3">
+		<Node name="Root" id="4">
 			<Node name="Entrances" id="1">
 				<Node name="Entry0" id="FFFFFFFF"/>
 				<Node name="Entry1" id="0"/>
 			</Node>
 			<Node name="GourmetGuy" id="2"/>
+			<Node name="AntiGourmetGuy" id="3"/>
 		</Node>
 	</MarkerTree>
 	<LightSets>
@@ -11079,7 +11080,12 @@
 	</Zones>
 	<Markers>
 		<Marker ver="4" type="Root">
-			<MapObject name="Root" id="3"/>
+			<MapObject name="Root" id="4"/>
+		</Marker>
+		<Marker ver="4" type="NPC" pos="-43,200,-322" yaw="165.000000">
+			<MapObject name="AntiGourmetGuy" id="3"/>
+			<Movement type="Stationary" data="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"/>
+			<Sprite sprite="C1" palette="5" animations="1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"/>
 		</Marker>
 		<Marker ver="4" type="NPC" pos="-5,332,-322" yaw="165.000000">
 			<MapObject name="GourmetGuy" id="2"/>

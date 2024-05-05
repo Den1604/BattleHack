@@ -3,17 +3,29 @@
   Call $GivePlayerStartingEquipment (  )
   Set *GB_StoryProgress 81
   Call AddItem ( .Item:Mushroom 00000000 )
-  Call GotoMap ( "btl_01" 00000001 )
+  Call GotoMap ( "hos_04" 00000000 )
   Wait 300`
   Return
   End
 }
 
-#new:Function $GivePlayerStartingEquipment {
-	LIO t0, 8010F290
-	ORI t1, r0, 1
-	SB r0, 0001 (t0) % sets the Hammer
-	SB t1, 000A (t0) % sets the AC
-	JR RA
-	ORI v0, r0, 2
+#new:Function $GivePlayerStartingEquipment
+{
+  LIO t0, 8010F290
+  ORI t1, r0, 0
+  ORI t2, r0, 1
+  ORI t3, r0, 3
+  ORI t4, r0, 14 % 20
+  SB t1, 0001 (t0) %set hammer
+  SB t4, 0002 (t0) %set hp
+  SB t4, 0003 (t0) %max hp
+  SB t4, 0004 (t0) %true max hp
+  SB t1, 0005 (t0) %set fp
+  SB t1, 0006 (t0) %max fp
+  SB t1, 0007 (t0) %true max fp
+  SB t1, 0008 (t0) %max BP
+  SB t3, 0009 (t0) %set Level
+  SB t2, 000A (t0) %set AC
+  JR RA
+  ORI v0, r0, 2
   }

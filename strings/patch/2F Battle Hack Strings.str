@@ -8,26 +8,45 @@
 #message:2F:001
 {
 [Style Right]
-Die.[Wait][End]
+Hello Mario![Pause:10][BR]
+As you can see I stole the[BR]
+Star Rod and wished to be an[BR]
+unbeatable foe.[BR]
+[Wait][Next]
+Well, unbeatable unless I am[BR]
+hit bluntly with a pebble, but[BR]
+you look pebbleless![BR]
+So...[BR]
+[Wait][Next]
+[PrintRising]COME AT ME WITH EVERYTHING[BR]
+YOU GOT!![/fx][BR]
+[Wait][End]
 }
 
 #message:2F:002
 {
 [Style Right]
-Phase 1 End String.[Wait][End]
+You're tough...[Pause:10][BR]
+I'll give you that![Pause:5][BR]
+Just give me oooonnnee second.[BR]
+[Wait][End]
 }
 
 #message:2F:003
 {
 [Style Right]
-Phase 2 Start String.[Wait][End]
+[Wave]Mwehehehehe![/fx][Pause:15][BR]
+Didn't expect that now, did you?![Pause:10][BR]
+I am now stronger than before and[BR]
+I'll [Shake]DESTROY[/fx] you!![BR]
+[Wait][End]
 }
 
 #message:2F:004
 {
 [Style Right]
 You're doing better than[BR]
-I expected...[BR]
+I expected...[Pause:10][BR]
 I suppose it is time for[BR]
 me to go all out.[Wait][End]
 }
@@ -50,11 +69,314 @@ mid-battle...[BR]
 #message:2F:007
 {
 [Style Right]
-2 Jumps in one Jump.[Wait][End]
+What?! You can't just jump on[BR]
+me like that! That's totally[BR]
+cheating![BR]
+[Wait][Next]
+That's like having two jumps[BR]
+in one jump![Pause:10][BR]
+And I'm having NONE of that![BR]
+[Wait][End]
 }
 
 #message:2F:008
 {
 [Style Right]
-You hammer me now u die.[Wait][End]
+Think you can just hit me THAT[BR]
+hard and I'll be fine with it?[Pause:15][BR]
+Better be ready, cause I'll up[BR]
+my game now![BR]
+[Wait][End]
+}
+
+#message:2F:009
+{
+[Style Right]
+Correct![Pause:5] Let's move on![BR]
+[wait][end]
+}
+
+#message:2F:00A
+{
+[Style Right]
+That is Incorrect.[Pause:5] Take this![BR]
+[wait][end]
+}
+
+#message:2F:00B
+{
+[Style Right]
+Answer incorrectly and you[BR]
+get damaged, answer correctly[BR]
+and you...[Pause:10] don't get damaged![BR]
+[Wait][Next]
+Question 1:[br][wait][next]
+True or false:[br]
+This sentence is false.[br][yield][end]
+}
+
+#message:2F:00C
+{
+	[Style Choice pos=105,60 size=100,46]
+	[StartChoice]
+	[Option 0]True[BR]
+	[Option 1]False[BR]
+	[Option 2][BR]
+	[EndChoice][End]
+}
+
+#message:2F:00D
+{
+[Style Right]
+This next one's a tricky one![BR]
+[Wait][Next]
+Question 2:[br][wait][next]
+What's Obama's last name?[br][yield][end]
+}
+
+#message:2F:00E
+{
+	[Style Choice pos=105,60 size=100,64]
+	[StartChoice]
+	[Option 0]Barack[BR]
+	[Option 1]Hussein[BR]
+	[Option 2]Obama[BR]
+	[EndChoice][End]
+}
+
+#message:2F:00F
+{
+[Style Right]
+Most people fail on that one.[BR]
+[Wait][Next]Question 3:[br][wait][next]
+What's my favorite Pokemon?[br][yield][end]
+}
+
+#message:2F:010
+{
+	[Style Choice pos=105,60 size=100,64]
+	[StartChoice]
+	[Option 0]Alcremie[BR]
+	[Option 1]Vanilish[BR]
+	[Option 2]Tatsugiri[BR]
+	[EndChoice][End]
+}
+
+#message:2F:011
+{
+[Style Right]
+Speaking of food, let's move on.[BR]
+[Wait][Next]
+Question 4:[br][wait][next]
+Which is healthier?[br][yield][end]
+}
+
+#message:2F:012
+{
+	[Style Choice pos=105,60 size=130,50]
+	[StartChoice]
+	[Option 0]Potato Salad[BR]
+	[Option 1]Shroom Cake[BR]
+	[EndChoice][End]
+}
+
+#message:2F:013
+{
+[Style Right]
+Time for a wild card question![BR]
+[Wait][Next]Question 5:[br][wait][next]
+When did this game (Paper[BR]
+Mario) release?[br][yield][end]
+}
+
+#message:2F:014
+{
+	[Style Choice pos=85,60 size=160,64]
+	[StartChoice]
+	[Option 0]August 11, 2000[BR]
+	[Option 1]February 5, 2001[BR]
+	[Option 2]October 5, 2001[BR]
+	[EndChoice][End]
+}
+
+#message:2F:015
+{
+[Style Right]
+Speaking of Paper Mario, how[BR]
+'bout a followup question?[BR]
+[Wait][Next]
+Question 6:[br][wait][next]
+In how many jam related hacks[BR]
+have I appeared so far?[BR]
+(Not counting other[BR]
+hacks from this jam)[br][yield][end]
+}
+
+#message:2F:016
+{
+	[Style Choice pos=146,60 size=50,64]
+	[StartChoice]
+	[Option 0]6[BR]
+	[Option 1]5[BR]
+	[Option 2]7[BR]
+	[EndChoice][End]
+}
+
+#message:2F:017
+{
+[Style Right]
+Up next is a tricky one,[BR]
+let's hope you explored[BR]
+earlier![BR]
+[Wait][Next]
+Question 7:[br][wait][next]
+How do you trigger the secret[BR]
+in the first map of the hack?[br][yield][end]
+}
+
+#message:2F:018
+{
+	[Style Choice pos=45,60 size=250,64]
+	[StartChoice]
+	[Option 0]Jump off the side of a ledge[BR]
+	[Option 1]Attempt to leave a few times[BR]
+	[Option 2]Stand completely still[BR]
+	[EndChoice][End]
+}
+
+#message:2F:019
+{
+[Style Right]
+That's enough difficult[BR]
+questions, how about something[BR]
+even a 10th grader can answer?[BR]
+[Wait][Next]
+Question 8:[br]
+[wait][next]
+What's 2[Up 4].[Down 4]((3/6)+(105-60[Up 4].[Down 4]2))?[BR]
+[yield][end]
+}
+
+#message:2F:01A
+{
+	[Style Choice pos=146,60 size=86,64]
+	[StartChoice]
+	[Option 0]-31[BR]
+	[Option 1]-207.5[BR]
+	[Option 2]-29[BR]
+	[EndChoice][End]
+}
+
+#message:2F:01B
+{
+[Style Right]
+How about we combine the last[BR]
+topic with a prior one?[BR]
+[Wait][Next]
+Question 9:[br][wait][next]
+What's is the damage calculation[BR]
+for an Electro Pop?[BR]
+[yield][end]
+}
+
+#message:2F:01C
+{
+[Style Choice pos=45,60 size=230,64]
+[StartChoice]
+[Option 0]Current Player Health + 15[BR]
+[Option 1]Maximum Player Health + 15[BR]
+[Option 2]Current Flower Points + 15[BR]
+[EndChoice][End]
+}
+
+#message:2F:01D
+{
+[Style Right]
+Last question! Good job on[BR]
+making it this far.[br]
+[Wait][Next]
+Final Question:[br][wait][next]
+How do real men beat Gourme-[Pause:15][BR]
+Wait a second...[Pause:10][BR]
+We can't do THREE whole repeat[BR]
+questions from the last Quizzes![BR]
+[Wait][Next]
+Lemme think of a new question...[Pause:10][BR]
+How about you uh...[Pause:10][BR]
+Mess around with your items or[BR]
+something, just gimme a second.[BR]
+[Wait][end]
+}
+
+#message:2F:01E
+{
+[Style Right]
+How about another food[BR]
+related one...[BR]
+Nah...[BR]
+Hmmm...[BR]
+[Wait][end]
+}
+
+#message:2F:01F
+{
+[Style Inspect]
+After getting a letter from the[BR]
+Star Spirits about a great power[BR]
+taking the Star Rod (again), Mario[BR]
+immediately left his house.[BR]
+[Wait][Next]
+Upon reaching Star Haven he[BR]
+was told to head to the[BR]
+Star Temple, where the threat lies.[BR]
+[Wait][Next]
+Wondering what great foe could[BR]
+have stolen the Star Rod this[BR]
+time, Mario readily stood infront[BR]
+of the Star Temple.[BR]
+[Wait][Next]
+Let's see where the newly[BR]
+built staircase takes him...[BR]
+[Wait][end]
+}
+
+#message:2F:020
+{
+[Style Right]
+No, my one weakness!![Pause:10][BR]
+You got me Mario...[Pause:15][BR]
+I'll leave and return the[BR]
+Star Rod to the Star Spirits.[BR]
+[Wait][end]
+}
+
+#message:2F:021
+{
+[Style Inspect]
+[BR]
+[Color:2E][Up 6]    Gourmet Guy's Extravagant[BR]
+        Boss Fight Bonanza[BR]
+              - End -[BR]
+[Wait][Next]
+[Down 12][Color:00]A romhack made by [Color:08]Den[Color:00] with help[BR]
+from [Color:05]Fewffwa[Color:00] for the [Color:26]Star Haven[BR]
+Battle Jam[Color:00].[BR]
+[Up 12]
+[Wait][Next]
+[Down 5][BR]
+Patches used made by:[BR]
+ - [Color:07]elDexter [Color:00]and [Color:05]Fewffwa[Color:00][BR]
+[Up 5]
+[Wait][Next]
+[Down 5][BR]
+Midis used made by:[BR]
+ - King Meteor[BR]
+[wait][next]
+[Down 2]
+Thank you SO much for playing,[BR]
+I hope you enjoyed this silly[BR]
+boss fight![BR]
+                                [Up 8]- [Color:08]Den[BR]
+[InputOff]
+[Wait][End]
 }
