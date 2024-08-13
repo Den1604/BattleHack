@@ -72,6 +72,9 @@
 		<Raster id="28" palette="0" src="Raster_28.png"/>
 		<Raster id="29" palette="19" src="Raster_29.png"/>
 		<Raster id="2A" palette="19" src="Raster_2A.png"/>
+		<Raster id="2B" palette="0" src="Raster_2B.png"/>
+		<Raster id="2C" palette="0" src="Raster_2C.png"/>
+		<Raster id="2D" palette="0" src="Raster_2D.png"/>
 	</RasterList>
 	<AnimationList>
 		<Animation name="Anim_00">
@@ -269,12 +272,56 @@
 				<Command val="2"/>
 				<Command val="2000"/>
 			</Component>
+			<Component name="Comp_01" xyz="16,3,2">
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="FFF1"/>
+				<Command val="1029"/>
+				<Command val="C"/>
+				<Command val="2000"/>
+			</Component>
+			<Component name="Comp_02" xyz="-10,14,-2">
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="102A"/>
+				<Command val="C"/>
+				<Command val="2000"/>
+			</Component>
 		</Animation>
 		<Animation name="Anim_0A">
 			<Component name="Comp_00" xyz="0,0,0">
 				<Command val="100C"/>
 				<Command val="4"/>
 				<Command val="100D"/>
+				<Command val="4"/>
+				<Command val="2000"/>
+			</Component>
+			<Component name="Comp_01" xyz="22,26,2">
+				<Command val="1029"/>
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="3A"/>
+				<Command val="3000"/>
+				<Command val="0"/>
+				<Command val="FFFF"/>
+				<Command val="0"/>
+				<Command val="4"/>
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="3A"/>
+				<Command val="4"/>
+				<Command val="2000"/>
+			</Component>
+			<Component name="Comp_02" xyz="-4,36,-2">
+				<Command val="102A"/>
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="91"/>
+				<Command val="3000"/>
+				<Command val="0"/>
+				<Command val="FFFF"/>
+				<Command val="0"/>
 				<Command val="4"/>
 				<Command val="2000"/>
 			</Component>
@@ -575,16 +622,33 @@
 		<Animation name="Anim_17">
 			<Component name="Comp_00" xyz="0,0,0">
 				<Command val="1000"/>
-				<Command val="8"/>
-				<Command val="100B"/>
-				<Command val="6"/>
+				<Command val="E"/>
+				<Command val="1001"/>
+				<Command val="C"/>
+				<Command val="7000"/>
+				<Command val="7"/>
 				<Command val="1000"/>
 				<Command val="8"/>
 				<Command val="100B"/>
 				<Command val="6"/>
+				<Command val="7006"/>
+				<Command val="3"/>
 				<Command val="2000"/>
 			</Component>
 			<Component name="Comp_01" xyz="16,2,2">
+				<Command val="1029"/>
+				<Command val="3000"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="E"/>
+				<Command val="3000"/>
+				<Command val="0"/>
+				<Command val="1"/>
+				<Command val="0"/>
+				<Command val="C"/>
+				<Command val="7000"/>
+				<Command val="7"/>
 				<Command val="1029"/>
 				<Command val="3000"/>
 				<Command val="0"/>
@@ -599,22 +663,30 @@
 				<Command val="0"/>
 				<Command val="FFF1"/>
 				<Command val="6"/>
-				<Command val="3000"/>
-				<Command val="0"/>
-				<Command val="0"/>
-				<Command val="0"/>
-				<Command val="8"/>
-				<Command val="3000"/>
-				<Command val="0"/>
+				<Command val="700D"/>
 				<Command val="3"/>
-				<Command val="0"/>
-				<Command val="4000"/>
-				<Command val="0"/>
-				<Command val="FFF1"/>
-				<Command val="6"/>
 				<Command val="2000"/>
 			</Component>
 			<Component name="Comp_02" xyz="-1,9,-2">
+				<Command val="102A"/>
+				<Command val="3000"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="5A"/>
+				<Command val="E"/>
+				<Command val="3000"/>
+				<Command val="0"/>
+				<Command val="1"/>
+				<Command val="0"/>
+				<Command val="4000"/>
+				<Command val="0"/>
+				<Command val="5A"/>
+				<Command val="C"/>
+				<Command val="7000"/>
+				<Command val="7"/>
 				<Command val="102A"/>
 				<Command val="4000"/>
 				<Command val="0"/>
@@ -632,22 +704,8 @@
 				<Command val="6"/>
 				<Command val="0"/>
 				<Command val="6"/>
-				<Command val="4000"/>
-				<Command val="0"/>
-				<Command val="5A"/>
-				<Command val="3000"/>
-				<Command val="0"/>
-				<Command val="1"/>
-				<Command val="0"/>
-				<Command val="8"/>
-				<Command val="4000"/>
-				<Command val="0"/>
-				<Command val="0"/>
-				<Command val="3000"/>
-				<Command val="FFFD"/>
-				<Command val="6"/>
-				<Command val="0"/>
-				<Command val="6"/>
+				<Command val="7013"/>
+				<Command val="3"/>
 				<Command val="2000"/>
 			</Component>
 		</Animation>

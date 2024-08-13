@@ -92,25 +92,6 @@
 
 #new:Script $Script_Idle_GourmetGuy
 {
-	Label  A
-	Call RandInt ( 60` *Var0 )
-	Add *Var0 60`
-	Wait *Var0
-	Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
-	Sub   *Var0  0000000A
-	Call  UseIdleAnimation ( .Actor:Self .False )
-	Call  SetAnimation ( .Actor:Self 00000001 003B0002 )
-	Call  SetGoalPos ( .Actor:Self *Var0 *Var1 *Var2 )
-	Call  RunToGoal ( .Actor:Self 5` .True )
-	Call  SetAnimation ( .Actor:Self 00000001 003B0017 )
-	Wait 28`
-	Call  SetAnimation ( .Actor:Self 00000001 003B0001 )
-	Wait 8`
-	Call  SetAnimation ( .Actor:Self 00000001 003B0002 )
-	Call  SetGoalToHome ( .Actor:Self )
-	Call  RunToGoal ( .Actor:Self 5` .True )
-	Call  UseIdleAnimation ( .Actor:Self .True )
-	Goto  A
 	Return
 	End
 }
@@ -164,9 +145,98 @@
     Call CancelEnemyTurn ( 00000001 )
     Return
   EndIf
-  ExecWait $Script_Attack_Slash
+  Call RandInt ( 2` *Var0 )
+  If *Var0 == 2`
+    ExecWait $Script_Jump_Attack
+  Else
+    ExecWait $Script_Attack_Slash
+  EndIf
 	Return
 	End
+}
+
+#new:Script $Script_Jump_Attack
+{
+  Call UseIdleAnimation ( .Actor:Self .False )
+  Call EnableIdleScript  ( .Actor:Self 00000000 )
+  Wait 5`
+  %
+  % OFF SCREEN JUMP
+  %
+  Call SetGoalPos ( .Actor:Self 0` 200` 0` )
+  Call SetAnimation ( .Actor:Self 00000001 003B0009 )
+  Call SetActorJumpGravity ( .Actor:Self *Fixed[1.0] )
+  Call JumpToGoal ( .Actor:Self 30` .False .False .False )
+  Wait 15`
+  %
+  % ATTACKING JUMP
+  %
+  Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  Call GetActorPos ( .Actor:Player *VarA *VarB *VarC )
+  Add *VarB 10`
+  Add *VarC 3`
+  Call SetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+  Call SetAnimation ( .Actor:Self 00000001 003B000A )
+  Call SetActorJumpGravity ( .Actor:Self *Fixed[1.0] )
+  Call JumpToGoal ( .Actor:Self 30` .False .False .True )
+  Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000003 00000020 )
+  %
+  % BONUS FLASHY BOUNCE
+  %
+  Call GetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+  Sub *VarA 40`
+  Sub *VarB 10`
+  Add *VarC 3`
+  Call SetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+  Call SetJumpAnimations ( .Actor:Self 00000001 003B0009 003B000A 003B0001 )
+  Call SetActorJumpGravity ( .Actor:Self *Fixed[1.0] )
+  Call JumpToGoal ( .Actor:Self 18` .True .False .True )
+  Wait 10`
+  %
+  % JUMP ON THAT SUCKA AGAIN IF HE JUMPED ON YOU
+  %
+  If *MF_UsedHammer == .True
+    Call EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
+    Call GetActorPos ( .Actor:Player *VarA *VarB *VarC )
+    Add *VarB 10`
+    Add *VarC 3`
+    Call SetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+    Call SetAnimation ( .Actor:Self 00000001 003B000A )
+    Call SetActorJumpGravity ( .Actor:Self *Fixed[1.0] )
+    Set *Var0 0`
+    Thread
+      Loop 15`
+        Add *Var0 24`
+        Call SetActorRotation ( .Actor:Self 0` *Var0 0` )
+        Wait 1`
+      EndLoop
+    EndThread
+    Call JumpToGoal ( .Actor:Self 15` .False .False .False )
+    Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000002 00000020 )
+    %
+    % JUMP INFRONT
+    %
+    Call GetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+    Add *VarA 80`
+    Sub *VarB 10`
+    Sub *VarC 3`
+    Call SetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+    Call SetJumpAnimations ( .Actor:Self 00000001 003B0009 003B000A 003B0001 )
+    Call SetActorJumpGravity ( .Actor:Self *Fixed[0.6] )
+    Call JumpToGoal ( .Actor:Self 30` .True .False .True )
+    Wait 10`
+  EndIf
+  %
+  % RESET CAM & GOURMET
+  %
+  Call UseBattleCamPreset ( 00000002 )
+  Call SetGoalToHome ( .Actor:Self )
+  Call SetAnimation ( .Actor:Self 00000001 003B0002 )
+  Call RunToGoal ( .Actor:Self 15` .True )
+  Call EnableIdleScript  ( .Actor:Self 00000001 )
+  Call UseIdleAnimation ( .Actor:Self .True )
+  Return
+  End
 }
 
 #new:Script $Script_Attack_Slash
@@ -194,7 +264,7 @@
     Wait 5`
     Call SetAnimation ( .Actor:Self 00000001 003B0016 )
     Wait 18`
-    Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000001 00000020 )
+    Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000000 00000002 00000020 )
     Call SetAnimation ( .Actor:Self 00000001 003B0001 )
   EndLoop
     Call UseBattleCamPreset ( 00000002 )
@@ -349,7 +419,6 @@
 
 #new:Script $Script_JumpDenial_Normal
 {
-  
   Call GetActorVar ( .Actor:Self 00000001 *Var0 )
   If *Var0 == 00000001
     Call  UseIdleAnimation  ( .Actor:Self .False )
@@ -391,7 +460,7 @@
 
 #new:IdleAnimations $IdleAnimations_GourmetGuyNormal
 {
-	.Status:Normal    003B0001
+	.Status:Normal    003B0017
 	.Status:End
 }
 
@@ -410,7 +479,7 @@
 	% stats
 	[Index]         D4b
 	[Level]         201`b
-	[MaxHP]         22`b
+	[MaxHP]         15`b
 	[Coins]         0`b
 	[Flags]       00200004
 	[StatusTable] $StatusTable_ThickGuy
@@ -991,6 +1060,7 @@
   EndThread
   Call SetGoalToHome ( .Actor:Player )
   Call SetActorJumpGravity ( .Actor:Player *Fixed[1.5] )
+  Call PlaySoundAtActor ( .Actor:Self 0000029A )
   Call JumpToGoal ( .Actor:Player 36` .False .True .False )
   Call SetTargetActor ( .Actor:Self .Actor:Player )
   Call SetGoalToTarget ( .Actor:Self )
@@ -1269,7 +1339,7 @@
             If *MF_StartQuiz == .False
               SetConst  *Var1  00C10008
             Else
-              SetConst  *Var1  00C10014
+              SetConst  *Var1  00C10508
             EndIf
    9C:  		ExecWait  DoNormalHit
    A8:  	EndCaseGroup
@@ -1330,7 +1400,11 @@
   3FC:  	CaseOR  ==  .Event:Immune % 19
   408:  	CaseOR  ==  .Event:AirLiftFailed % 1F
   414:  		SetConst  *Var0  00000001
-  424:  		SetConst  *Var1  00C10501
+            If *MF_StartQuiz == .False
+              SetConst  *Var1  00C10001
+            Else
+              SetConst  *Var1  00C10501
+            EndIf
   434:  		ExecWait  DoImmune
   440:  	EndCaseGroup
   448:  	Case  ==  .Event:Death % 20
@@ -1388,7 +1462,6 @@
 
 #new:Script $Script_ThickGuyDeath
 {
-  
   Return
   End
 }
